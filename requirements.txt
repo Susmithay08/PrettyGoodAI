@@ -1,0 +1,16 @@
+# Web server + Twilio webhook handling
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+
+# Telephony
+twilio==9.4.1
+
+# AI services
+anthropic==0.42.0
+httpx==0.28.1
+websockets==14.1
+
+# Tunnel + config
+pyngrok==7.2.3
+python-dotenv==1.0.1

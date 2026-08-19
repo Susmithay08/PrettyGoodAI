@@ -60,6 +60,21 @@ class CallRecord:
         return (self.ended_at or time.time()) - self.started_at
 
 
+def _archive_previous(path: Path, started_at: float) -> None:
+    """Move an existing transcript aside instead of overwriting it.
+
+    Re-running a scenario used to destroy the previous transcript. That loses
+    the record of earlier attempts, which is exactly the evidence you want when
+    a bug reproduces across runs.
+    """
+    if not path.exists():
+        return
+    archive = TRANSCRIPTS_DIR / "archive"
+    archive.mkdir(parents=True, exist_ok=True)
+    stamp = time.strftime("%Y%m%d-%H%M%S", time.localtime(path.stat().st_mtime))
+    path.replace(archive / f"{path.stem}-{stamp}{path.suffix}")
+
+
 def write_transcript(record: CallRecord) -> Path:
     TRANSCRIPTS_DIR.mkdir(parents=True, exist_ok=True)
     s = record.scenario
@@ -98,9 +113,11 @@ def write_transcript(record: CallRecord) -> Path:
         lines += ["=" * 72, "PIPELINE NOTES", "=" * 72, *record.notes, ""]
 
     path = TRANSCRIPTS_DIR / f"transcript-{s.slug}.txt"
+    _archive_previous(path, record.started_at)
     path.write_text("\n".join(lines), encoding="utf-8")
 
     json_path = TRANSCRIPTS_DIR / f"call-{s.slug}.json"
+    _archive_previous(json_path, record.started_at)
     json_path.write_text(json.dumps({
         "scenario": s.number,
         "name": s.name,

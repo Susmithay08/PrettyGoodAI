@@ -45,7 +45,8 @@ AGENT = "AGENT (Pretty Good AI)"
 
 FRAME_SECONDS = 0.02
 PREBUFFER_FRAMES = 20        # 400 ms of jitter buffer before we start pacing
-ENDPOINT_DELAY = 1.0         # silence after agent speech before we reply
+ENDPOINT_DELAY = 1.6         # silence after a *finished* sentence before we reply
+UNFINISHED_DELAY = 3.0       # ...and longer when they trailed off mid-sentence
 GREETING_SILENCE = 2.2       # longer gap required before our very first line
 AGENT_TURN_TIMEOUT = 14.0    # give up waiting and say something anyway
 GREETING_TIMEOUT = 25.0      # IVR preambles can run a while before a real prompt
@@ -76,6 +77,21 @@ def is_boilerplate(text: str) -> bool:
     """True if the agent has said nothing yet that warrants a reply."""
     stripped = text.strip()
     return bool(stripped) and bool(IVR_BOILERPLATE.match(stripped))
+
+
+def sounds_finished(text: str) -> bool:
+    """Did the agent land on a complete thought, or trail off mid-sentence?
+
+    Their agent delivers one utterance in several bursts with multi-second
+    gaps ("The earliest slot on Thursday is" ... "9:45 with Dr. X"). Taking a
+    turn in one of those gaps makes us talk over them, and they stop.
+
+    Deepgram's smart_format punctuates a sentence it considers complete and
+    leaves a truncated one bare, so terminal punctuation is the signal. Don't
+    also test for trailing function words — plenty of real sentences end on
+    one ("Thank you.", "How can I help you?").
+    """
+    return text.strip().endswith((".", "?", "!"))
 
 
 # --------------------------------------------------------------------------
@@ -477,8 +493,14 @@ class MediaSession:
 
             if self._agent_buffer:
                 quiet_for = time.monotonic() - self._last_agent_audio
-                if quiet_for >= silence:
-                    buffered = " ".join(self._agent_buffer).strip()
+                buffered = " ".join(self._agent_buffer).strip()
+
+                # A trailed-off sentence means they're pausing, not finished.
+                needed = silence
+                if not sounds_finished(buffered):
+                    needed = max(silence, UNFINISHED_DELAY)
+
+                if quiet_for >= needed:
                     if is_boilerplate(buffered):
                         # Recording notice / language menu / hold message. Log it,
                         # keep it out of the conversation, and keep listening.

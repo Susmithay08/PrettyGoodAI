@@ -124,19 +124,23 @@ async def download_recording(
     account_sid: str,
     auth_token: str,
     *,
-    attempts: int = 12,
+    attempts: int = 20,
     delay: float = 5.0,
 ) -> Path | None:
     """Poll Twilio for the call's recording and save it as MP3.
 
-    Twilio finalizes recordings a few seconds after the call ends, so this
-    retries rather than failing on the first empty response.
+    Two separate waits are needed. The recording *resource* appears in the list
+    almost immediately, but its `status` stays "processing" while Twilio encodes
+    the audio — fetching the .mp3 during that window returns 404. So we wait for
+    status == "completed", then still retry the media fetch, because the
+    resource can be marked complete a moment before the media is servable.
     """
     auth = (account_sid, auth_token)
     list_url = f"{TWILIO_API}/Accounts/{account_sid}/Calls/{call_sid}/Recordings.json"
 
     async with httpx.AsyncClient(timeout=60.0) as client:
         recording_sid = None
+
         for attempt in range(1, attempts + 1):
             try:
                 response = await client.get(list_url, auth=auth)
@@ -147,25 +151,56 @@ async def download_recording(
                 recordings = []
 
             if recordings:
-                recording_sid = recordings[0]["sid"]
-                break
-            log.info("Recording not ready yet (attempt %d/%d)...", attempt, attempts)
+                recording = recordings[0]
+                status = recording.get("status", "")
+                if status == "completed":
+                    recording_sid = recording["sid"]
+                    log.info(
+                        "Recording %s ready (%ss, %s channel(s))",
+                        recording_sid, recording.get("duration"), recording.get("channels"),
+                    )
+                    break
+                if status in ("failed", "absent"):
+                    log.error("Twilio reports recording status %r for %s", status, call_sid)
+                    return None
+                log.info("Recording still %s (attempt %d/%d)...", status, attempt, attempts)
+            else:
+                log.info("Recording not listed yet (attempt %d/%d)...", attempt, attempts)
             await asyncio.sleep(delay)
 
         if not recording_sid:
-            log.error("No recording found for call %s", call_sid)
+            log.error(
+                "No completed recording for call %s after %ds. It may still be "
+                "processing — run `python -m voice_bot.fetch_recordings` to retry.",
+                call_sid, int(attempts * delay),
+            )
             return None
 
         media_url = f"{TWILIO_API}/Accounts/{account_sid}/Recordings/{recording_sid}.mp3"
-        try:
-            audio = await client.get(media_url, auth=auth, follow_redirects=True)
-            audio.raise_for_status()
-        except httpx.HTTPError as exc:
-            log.error("Recording download failed: %s", exc)
+        audio = None
+        for attempt in range(1, 11):
+            try:
+                response = await client.get(media_url, auth=auth, follow_redirects=True)
+                if response.status_code == 404:
+                    log.info("Media not servable yet (attempt %d/10)...", attempt)
+                    await asyncio.sleep(delay)
+                    continue
+                response.raise_for_status()
+                audio = response.content
+                break
+            except httpx.HTTPError as exc:
+                log.warning("Recording download failed (attempt %d): %s", attempt, exc)
+                await asyncio.sleep(delay)
+
+        if audio is None:
+            log.error(
+                "Could not download recording %s. Retry later with "
+                "`python -m voice_bot.fetch_recordings`.", recording_sid,
+            )
             return None
 
     RECORDINGS_DIR.mkdir(parents=True, exist_ok=True)
     path = RECORDINGS_DIR / f"call-{scenario_slug}.mp3"
-    path.write_bytes(audio.content)
-    log.info("Recording saved: %s (%.1f KB)", path.name, len(audio.content) / 1024)
+    path.write_bytes(audio)
+    log.info("Recording saved: %s (%.1f KB)", path.name, len(audio) / 1024)
     return path

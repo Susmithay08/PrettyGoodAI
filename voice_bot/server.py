@@ -24,6 +24,8 @@ import time
 import uuid
 from dataclasses import dataclass, field
 
+from html import escape
+
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import PlainTextResponse
 
@@ -57,6 +59,7 @@ class CallRun:
     scenario: Scenario
     record: CallRecord
     finished: threading.Event = field(default_factory=threading.Event)
+    claimed: bool = False  # a media stream has attached to this run
 
 
 _RUNS: dict[str, CallRun] = {}
@@ -90,6 +93,35 @@ def get_run(run_id: str) -> CallRun | None:
     return _RUNS.get(run_id)
 
 
+def _resolve_run(run_id: str, source: str) -> CallRun | None:
+    """Find the run this media stream belongs to.
+
+    Twilio does not reliably preserve the query string on a <Stream> URL, so
+    the run id is passed three ways and we accept whichever survives. Calls are
+    placed one at a time, so falling back to "the one unclaimed run" is safe
+    and keeps a dropped id from killing the call.
+    """
+    run = _RUNS.get(run_id) if run_id else None
+    if run is not None:
+        log.info("Media stream matched run %s via %s", run_id, source)
+        return run
+
+    unclaimed = [r for r in _RUNS.values() if not r.claimed and not r.finished.is_set()]
+    if len(unclaimed) == 1:
+        run = unclaimed[0]
+        log.warning(
+            "Run id missing from the media stream (got %r) — falling back to the only "
+            "pending run, %s", run_id, run.run_id,
+        )
+        return run
+
+    log.error(
+        "Cannot match media stream to a run (id=%r, %d unclaimed runs)",
+        run_id, len(unclaimed),
+    )
+    return None
+
+
 # --------------------------------------------------------------------------
 # HTTP
 # --------------------------------------------------------------------------
@@ -106,20 +138,30 @@ async def health() -> dict:
 async def twiml(request: Request) -> PlainTextResponse:
     """TwiML that hands the call's audio to our WebSocket."""
     run_id = request.query_params.get("run", "")
+    if not run_id and request.method == "POST":
+        form = await request.form()
+        run_id = str(form.get("run", ""))
 
     if _PUBLIC_BASE:
-        stream_url = f"{_PUBLIC_BASE.replace('https://', 'wss://').replace('http://', 'ws://')}" \
-                     f"/media?run={run_id}"
+        base = _PUBLIC_BASE.replace("https://", "wss://").replace("http://", "ws://")
     else:  # local testing without a tunnel
         port = f":{request.url.port}" if request.url.port not in (None, 443, 80) else ""
-        stream_url = f"wss://{request.url.hostname}{port}/media?run={run_id}"
+        base = f"wss://{request.url.hostname}{port}"
 
+    # The run id rides in the URL *and* as a <Parameter>. Twilio delivers
+    # <Parameter> values in the `start` frame's customParameters, which is the
+    # documented channel and survives when the query string does not.
     body = (
         '<?xml version="1.0" encoding="UTF-8"?>'
         "<Response>"
-        f'<Connect><Stream url="{stream_url}" /></Connect>'
+        "<Connect>"
+        f'<Stream url="{escape(f"{base}/media?run={run_id}", quote=True)}">'
+        f'<Parameter name="run" value="{escape(run_id, quote=True)}" />'
+        "</Stream>"
+        "</Connect>"
         "</Response>"
     )
+    log.info("Served TwiML for run %r -> %s/media", run_id, base)
     return PlainTextResponse(body, media_type="application/xml")
 
 
@@ -130,17 +172,45 @@ async def status_callback(request: Request) -> PlainTextResponse:
     return PlainTextResponse("", status_code=204)
 
 
+async def _read_start_frame(websocket: WebSocket) -> dict | None:
+    """Consume Twilio's `connected` / `start` frames; return the start message."""
+    deadline = time.monotonic() + 15
+    while time.monotonic() < deadline:
+        try:
+            message = json.loads(await websocket.receive_text())
+        except (WebSocketDisconnect, RuntimeError, json.JSONDecodeError):
+            return None
+        if message.get("event") == "start":
+            return message
+    return None
+
+
 @app.websocket("/media")
 async def media(websocket: WebSocket) -> None:
     await websocket.accept()
-    run_id = websocket.query_params.get("run", "")
-    run = _RUNS.get(run_id)
-    if run is None or _CONFIG is None:
-        log.error("Media stream for unknown run %r", run_id)
+
+    # Read `start` first: it carries customParameters, which is where the run
+    # id reliably lives. Only then can we tell which scenario this call is.
+    start = await _read_start_frame(websocket)
+    if start is None or _CONFIG is None:
+        log.error("Media stream never sent a usable `start` frame")
         await websocket.close()
         return
 
+    run_id = websocket.query_params.get("run", "")
+    source = "query string"
+    if not run_id:
+        run_id = start.get("start", {}).get("customParameters", {}).get("run", "")
+        source = "customParameters"
+
+    run = _resolve_run(run_id, source)
+    if run is None:
+        await websocket.close()
+        return
+    run.claimed = True
+
     session = MediaSession(websocket, _CONFIG, run)
+    session.adopt_start(start)
     try:
         await session.run()
     except WebSocketDisconnect:
@@ -198,8 +268,21 @@ class MediaSession:
 
     # -- main loop ---------------------------------------------------------
 
+    def adopt_start(self, message: dict) -> None:
+        """Apply the `start` frame the websocket handler already consumed."""
+        start = message.get("start", {})
+        self.stream_sid = start.get("streamSid")
+        self.record.call_sid = start.get("callSid", "")
+        self.record.started_at = time.time()
+        self._started_at = time.monotonic()
+        log.info(
+            "Call %s connected — scenario %s (%s)",
+            self.record.call_sid, self.scenario.slug, self.scenario.name,
+        )
+
     async def run(self) -> None:
-        await self._await_stream_start()
+        if self.stream_sid is None:
+            await self._await_stream_start()
         if self.done:
             return
 

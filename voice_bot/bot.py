@@ -74,7 +74,9 @@ class PatientBrain:
         try:
             response = await self._client.messages.create(
                 model=self._model,
-                max_tokens=300,
+                # A hard ceiling on length. Phone turns are one or two short
+                # sentences; give it room for a paragraph and it writes one.
+                max_tokens=110,
                 system=self._system,
                 messages=messages,
             )

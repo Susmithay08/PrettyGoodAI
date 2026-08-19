@@ -46,7 +46,7 @@ AGENT = "AGENT (Pretty Good AI)"
 FRAME_SECONDS = 0.02
 PREBUFFER_FRAMES = 20        # 400 ms of jitter buffer before we start pacing
 ENDPOINT_DELAY = 1.6         # silence after a *finished* sentence before we reply
-UNFINISHED_DELAY = 3.0       # ...and longer when they trailed off mid-sentence
+UNFINISHED_DELAY = 4.0       # ...and longer when they trailed off mid-sentence
 GREETING_SILENCE = 2.2       # longer gap required before our very first line
 AGENT_TURN_TIMEOUT = 14.0    # give up waiting and say something anyway
 GREETING_TIMEOUT = 25.0      # IVR preambles can run a while before a real prompt
@@ -303,6 +303,7 @@ class MediaSession:
 
         # Turn-taking state
         self._agent_buffer: list[str] = []
+        self._agent_seq = 0  # bumps on every finalized agent transcript
         self._last_agent_audio = time.monotonic()
         self._utterance_ended = False
         self._barge_in = asyncio.Event()
@@ -436,7 +437,21 @@ class MediaSession:
                     "the call moving — repeat your question or ask if they're still there."
                 )
 
-            line = await self.brain.next_line(nudge)
+            # Generating a line takes a couple of seconds. If the agent resumes
+            # while we're thinking, whatever we produced was a reply to half a
+            # sentence — throw it away, fold in the rest, and think again.
+            line = ""
+            for _ in range(3):
+                seq_before = self._agent_seq
+                line = await self.brain.next_line(nudge)
+                if self.done or self._agent_seq == seq_before:
+                    break
+                log.info("Agent kept talking while we were thinking — reconsidering")
+                self.record.note("Discarded a reply: the agent was still mid-turn")
+                await self._wait_for_agent(6.0)
+                self.brain.record_agent(self._drain_agent())
+                nudge = None
+
             if line:
                 await self._say(line)
             elif not heard:
@@ -460,6 +475,7 @@ class MediaSession:
     async def _on_final(self, text: str) -> None:
         self._last_agent_audio = time.monotonic()
         self._agent_buffer.append(text)
+        self._agent_seq += 1
         log.info("AGENT: %s", text)
 
     async def _on_utterance_end(self) -> None:

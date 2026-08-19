@@ -19,6 +19,7 @@ import asyncio
 import base64
 import json
 import logging
+import re
 import threading
 import time
 import uuid
@@ -44,9 +45,37 @@ AGENT = "AGENT (Pretty Good AI)"
 
 FRAME_SECONDS = 0.02
 PREBUFFER_FRAMES = 20        # 400 ms of jitter buffer before we start pacing
-ENDPOINT_DELAY = 0.65        # silence after agent speech before we reply
+ENDPOINT_DELAY = 1.0         # silence after agent speech before we reply
+GREETING_SILENCE = 2.2       # longer gap required before our very first line
 AGENT_TURN_TIMEOUT = 14.0    # give up waiting and say something anyway
-GREETING_TIMEOUT = 8.0       # how long we let the agent greet us first
+GREETING_TIMEOUT = 25.0      # IVR preambles can run a while before a real prompt
+PRE_SPEECH_QUIET = 0.35      # never start talking on top of live agent audio
+PRE_SPEECH_MAX_WAIT = 6.0    # ...but don't wait forever for a gap
+
+# Automated preamble that is not an invitation to speak. An IVR reads these
+# with short gaps between sentences, and endpointing fires in every gap — so
+# without this the bot answers the recording disclaimer and then talks over
+# the rest of the menu. Matched against a whole buffered turn: if that's all
+# the agent has said, keep listening instead of taking a turn.
+IVR_BOILERPLATE = re.compile(
+    r"""^(?:\W*(?:
+        (?:this\s+)?call\s+(?:may|is|will)\s+be\s+(?:being\s+)?recorded
+      | (?:for\s+)?quality\s+(?:and|&)\s+training(?:\s+purposes)?
+      | (?:for|press)\s+(?:english|spanish|espa(?:n|ñ)ol|\w+)\s*,?\s*press\s+\w+
+      | para\s+espa(?:n|ñ)ol\s*,?\s*(?:oprima|marque|presione)\s+\w+
+      | press\s+\w+\s+(?:for|to)\s+[\w\s]+
+      | please\s+(?:hold|wait|stay\s+on\s+the\s+line)
+      | your\s+call\s+is\s+important\s+to\s+us
+      | (?:one\s+)?moment\s+please
+      )\W*)+$""",
+    re.IGNORECASE | re.VERBOSE,
+)
+
+
+def is_boilerplate(text: str) -> bool:
+    """True if the agent has said nothing yet that warrants a reply."""
+    stripped = text.strip()
+    return bool(stripped) and bool(IVR_BOILERPLATE.match(stripped))
 
 
 # --------------------------------------------------------------------------
@@ -357,14 +386,19 @@ class MediaSession:
                 self.done = True
 
     async def _converse(self) -> None:
-        # Let the agent deliver its greeting first — that's what a real caller does.
-        heard_greeting = await self._wait_for_agent(GREETING_TIMEOUT)
+        # Let the agent get through its greeting — and any IVR preamble — before
+        # we say anything. Requires a longer gap than a mid-call turn does.
+        heard_greeting = await self._wait_for_agent(
+            GREETING_TIMEOUT, silence=GREETING_SILENCE
+        )
         if self.done:
             return
         if heard_greeting:
             self.brain.record_agent(self._drain_agent())
         else:
-            self.record.note("Agent did not greet within 8s — opened anyway")
+            self.record.note(
+                f"No real greeting within {GREETING_TIMEOUT:.0f}s — opened anyway"
+            )
 
         await self._say(self.scenario.opening_line)
 
@@ -423,23 +457,53 @@ class MediaSession:
             self.record.add(AGENT, text)
         return text
 
-    async def _wait_for_agent(self, timeout: float) -> bool:
-        """Block until the agent finishes a turn (or we decide to cut in)."""
+    async def _wait_for_agent(self, timeout: float, *, silence: float = ENDPOINT_DELAY) -> bool:
+        """Block until the agent finishes a turn (or we decide to cut in).
+
+        `silence` is how long the line must stay quiet before we accept the
+        turn as over. Deepgram's endpoint signal alone is too eager against an
+        IVR, which pauses between prompts — so we require real silence, and we
+        ignore turns that are pure automated preamble.
+        """
         deadline = time.monotonic() + timeout
         self._barge_in.clear()
         while not self.done:
             await asyncio.sleep(0.08)
+
             if self._barge_in.is_set():
                 self._barge_in.clear()
                 self.record.note("Bot interrupted the agent mid-sentence (barge-in test)")
                 return bool(self._agent_buffer)
+
             if self._agent_buffer:
                 quiet_for = time.monotonic() - self._last_agent_audio
-                if self._utterance_ended or quiet_for >= ENDPOINT_DELAY:
+                if quiet_for >= silence:
+                    buffered = " ".join(self._agent_buffer).strip()
+                    if is_boilerplate(buffered):
+                        # Recording notice / language menu / hold message. Log it,
+                        # keep it out of the conversation, and keep listening.
+                        log.info("Ignoring automated preamble: %s", buffered)
+                        self.record.add(AGENT, buffered)
+                        self.record.note(f"Skipped IVR preamble: {buffered[:70]!r}")
+                        self._agent_buffer.clear()
+                        self._utterance_ended = False
+                        deadline = time.monotonic() + timeout
+                        continue
                     return True
+
             if time.monotonic() >= deadline:
                 return bool(self._agent_buffer)
         return False
+
+    async def _wait_for_gap(self) -> None:
+        """Hold off starting a line while the agent is still audibly talking."""
+        if self.scenario.interrupt_after_words:
+            return  # scenario 09 is *supposed* to talk over the agent
+        deadline = time.monotonic() + PRE_SPEECH_MAX_WAIT
+        while not self.done and time.monotonic() < deadline:
+            if time.monotonic() - self._last_agent_audio >= PRE_SPEECH_QUIET:
+                return
+            await asyncio.sleep(0.05)
 
     # -- speaking ----------------------------------------------------------
 
@@ -450,6 +514,12 @@ class MediaSession:
         audio = await self.speaker.synthesize(text)
         if not audio:
             self.record.note(f"TTS failed, line not spoken: {text[:60]!r}")
+            return
+
+        # Synthesis takes a beat; the agent may have started talking again in
+        # the meantime. Wait for a gap so we don't open on top of them.
+        await self._wait_for_gap()
+        if self.done:
             return
 
         if self.scenario.quiet:

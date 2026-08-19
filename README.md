@@ -189,10 +189,20 @@ winget install --id Cloudflare.cloudflared --scope user
 `GET <tunnel-url>/health` returns `{"ok": true}`. Twilio's debugger shows the exact webhook
 error. A fresh quick-tunnel hostname can take a few seconds to resolve in DNS.
 
-**Bot talks over the agent.** Raise `ENDPOINT_DELAY` in `server.py` (default `0.65`).
+**Bot talks over the agent.** Raise `ENDPOINT_DELAY` in `server.py` (default `1.0`) — how
+long the line must stay quiet before the bot accepts a turn as finished.
+
+**Bot answers the IVR preamble / talks during the intro menu.** Raise `GREETING_SILENCE`
+(default `2.2`), the longer gap required before the bot's very first line. Automated
+preamble — recording notices, language menus, hold messages — is matched by
+`IVR_BOILERPLATE` and skipped rather than answered; add a pattern there if a new one
+slips through. Skips are logged and noted in the transcript.
 
 **Bot waits too long before replying.** Lower `ENDPOINT_DELAY`, or lower Deepgram's
 `endpointing` in `transcriber.py`.
+
+**Recording missing / 404 on download.** Twilio encodes for a while after hangup. Run
+`python -m voice_bot.fetch_recordings` to backfill (`--force` to redownload everything).
 
 **Recording is missing.** Twilio finalizes recordings a few seconds after hangup;
 `download_recording` retries 12 times at 5 s intervals. If it still fails, the call was

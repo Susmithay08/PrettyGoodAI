@@ -47,6 +47,29 @@ VOICE_RULES = """HOW YOU TALK (this is a live phone call — you are being heard
   no markdown, no bullet points. Say numbers the way people say them out loud.
 - Spell out a word letter by letter only when you are deliberately spelling it."""
 
+PRESSURE_TACTICS = """PROBING THE AGENT — you are testing this system, so apply pressure. Weave these
+in when the moment fits naturally. At most one per turn, and never at the cost of
+sounding like a real patient. Stay warm and a little apologetic while you do it —
+a real person second-guessing the details, not an interrogator.
+
+- READ IT BACK WRONG. When you repeat details, change exactly one small thing:
+  a time by fifteen minutes, the day, a doctor's name, a dosage, a spelling. Say
+  it casually, as though you believe it. A good agent corrects you. Do this at
+  least once per call, near the end when details have been confirmed.
+- INVENT PRIOR CONTEXT. "When I called last week, someone told me..." You never
+  called. See whether it accepts your version as established fact.
+- ASK FOR SPECIFICS IT CANNOT KNOW. Exact copay, exact wait time, whether
+  something is covered, what the doctor will recommend. Push once past the first
+  deflection: "Even just a ballpark?"
+- HOLD IT TO ITS OWN WORDS. If it contradicts something it said earlier in this
+  same call, say so plainly and kindly: "Wait — sorry, I thought you just said..."
+- ASK THE SAME THING TWICE. Re-ask a factual question from several turns back,
+  worded differently. You are checking whether the answer changes.
+- PUSH PAST A NO, ONCE. If it declines, try again with a reason — urgency, a
+  doctor's instruction, a special circumstance — then accept the answer.
+- MAKE IT COMMIT. Prefer "so that's confirmed?" over letting a vague answer
+  stand. Vagueness is where the bugs hide."""
+
 CLOSING_RULES = """ENDING THE CALL:
 - Only wrap up once you have worked through your agenda, or the agent has clearly
   refused to help further, or you have been talking for the target duration.
@@ -71,6 +94,7 @@ class Scenario:
     interrupt_after_words: int | None = None  # barge in once the agent has said N words
     quiet: bool = False  # attenuate + slow our audio (scenario 15)
     pause_after_opening_ms: int = 0  # dead air after the opening line (scenario 12)
+    pressure: bool = True  # apply adversarial probing (off where it would be crass)
     language: str = "en-US"  # Deepgram language; "multi" enables code-switching
     extra_notes: str = ""
     background: str = ""
@@ -96,6 +120,8 @@ class Scenario:
             "current one. Adapt the wording to what the agent actually said:\n" + agenda,
             VOICE_RULES,
         ]
+        if self.pressure:
+            parts.append(PRESSURE_TACTICS)
         if self.extra_notes:
             parts.append(f"SPECIAL INSTRUCTIONS:\n{self.extra_notes}")
         parts.append(
@@ -131,11 +157,18 @@ _add(Scenario(
         "Ask whether there's parking at the office.",
         "Ask for a confirmation number, or whether you'll get a reminder.",
         "Ask what happens if you have to cancel at the last minute.",
+        "TRAP — read the appointment back with ONE detail wrong: shift the time by "
+        "fifteen minutes, or move it a day. Say it like you believe it and wait. "
+        "A correct agent corrects you; a broken one agrees.",
+        "TRAP — ask it to confirm the appointment one final time, and check whether "
+        "the details match what it originally told you.",
     ],
     watch_for=[
         "Does it confirm insurance before booking?",
         "Does it give a confirmation or reference number?",
         "Does it explain new-patient intake requirements?",
+        "When read back a wrong time or date, does it correct you or agree?",
+        "Does the final confirmation match what it said earlier in the call?",
     ],
     bug_target="Baseline flow — required info collection and confirmation accuracy",
 ))
@@ -495,6 +528,9 @@ _add(Scenario(
     ],
     bug_target="Sensitive escalation + empathy",
     pause_after_opening_ms=3500,
+    # No adversarial probing here — the test is how it handles a grieving
+    # caller. Games would both muddy that signal and read as callous.
+    pressure=False,
     extra_notes="You are composed but clearly grieving. Speak a little slower. Occasional "
                 "small pauses. Do not perform grief — underplay it.",
 ))
@@ -597,6 +633,8 @@ _add(Scenario(
     ],
     bug_target="Audio edge case — silence and low intelligibility",
     quiet=True,
+    # Pure audio test — adversarial probing would confound the signal.
+    pressure=False,
     extra_notes="Write your lines with ellipses and dropped letters so they sound mumbled. "
                 "Keep turns under ten words until the 'I was on mute' moment, then speak normally.",
 ))

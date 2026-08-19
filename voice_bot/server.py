@@ -61,11 +61,23 @@ class CallRun:
 
 _RUNS: dict[str, CallRun] = {}
 _CONFIG: Config | None = None
+_PUBLIC_BASE: str = ""
 
 
 def configure(config: Config) -> None:
     global _CONFIG
     _CONFIG = config
+
+
+def set_public_url(url: str) -> None:
+    """Tell the server its own public hostname.
+
+    The stream URL is built from this rather than from the inbound request's
+    Host header — behind a tunnel or proxy the header is not something we
+    want to depend on.
+    """
+    global _PUBLIC_BASE
+    _PUBLIC_BASE = url.rstrip("/")
 
 
 def register_run(scenario: Scenario) -> CallRun:
@@ -94,10 +106,13 @@ async def health() -> dict:
 async def twiml(request: Request) -> PlainTextResponse:
     """TwiML that hands the call's audio to our WebSocket."""
     run_id = request.query_params.get("run", "")
-    host = request.url.hostname
-    scheme = "wss"
-    port = f":{request.url.port}" if request.url.port not in (None, 443, 80) else ""
-    stream_url = f"{scheme}://{host}{port}/media?run={run_id}"
+
+    if _PUBLIC_BASE:
+        stream_url = f"{_PUBLIC_BASE.replace('https://', 'wss://').replace('http://', 'ws://')}" \
+                     f"/media?run={run_id}"
+    else:  # local testing without a tunnel
+        port = f":{request.url.port}" if request.url.port not in (None, 443, 80) else ""
+        stream_url = f"wss://{request.url.hostname}{port}/media?run={run_id}"
 
     body = (
         '<?xml version="1.0" encoding="UTF-8"?>'

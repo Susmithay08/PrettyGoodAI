@@ -24,7 +24,7 @@ import time
 import uvicorn
 from twilio.rest import Client as TwilioClient
 
-from voice_bot import server
+from voice_bot import server, tunnel
 from voice_bot.config import Config, ConfigError, load_config
 from voice_bot.recorder import download_recording, write_transcript
 from voice_bot.scenarios import Scenario, all_scenarios, get_scenario
@@ -60,21 +60,15 @@ def start_server(config: Config) -> threading.Thread:
     raise RuntimeError("Media server failed to start")
 
 
-def open_tunnel(config: Config) -> str:
-    """Return the public https base URL Twilio should call back to."""
-    if config.public_url:
-        url = config.public_url.rstrip("/")
-        log.info("Using PUBLIC_URL from environment: %s", url)
-        return url
-
-    from pyngrok import conf, ngrok
-
-    if config.ngrok_auth_token:
-        conf.get_default().auth_token = config.ngrok_auth_token
-    tunnel = ngrok.connect(config.server_port, "http", bind_tls=True)
-    url = tunnel.public_url.replace("http://", "https://")
-    log.info("ngrok tunnel: %s -> :%d", url, config.server_port)
-    return url
+def open_tunnel(config: Config) -> tuple[str, object]:
+    """Return the public https base URL Twilio calls back to, plus a shutdown hook."""
+    url, closer = tunnel.open_tunnel(
+        config.server_port,
+        public_url=config.public_url,
+        ngrok_token=config.ngrok_auth_token,
+    )
+    server.set_public_url(url)
+    return url, closer
 
 
 # --------------------------------------------------------------------------
@@ -171,26 +165,34 @@ async def amain(args: argparse.Namespace) -> int:
         scenarios = [dataclasses.replace(s, voice=args.voice) for s in scenarios]
 
     start_server(config)
-    base_url = open_tunnel(config)
+    try:
+        base_url, close_tunnel = open_tunnel(config)
+    except RuntimeError as exc:
+        log.error("Could not open a public tunnel:\n%s", exc)
+        return 2
+
     twilio = TwilioClient(config.twilio_account_sid, config.twilio_auth_token)
 
     log.info("Target line: %s", config.target_phone_number)
     log.info("Running %d scenario(s)", len(scenarios))
 
     succeeded = 0
-    for index, scenario in enumerate(scenarios):
-        try:
-            if await run_scenario(config, twilio, base_url, scenario):
-                succeeded += 1
-        except KeyboardInterrupt:
-            log.warning("Interrupted by user")
-            break
-        except Exception as exc:  # noqa: BLE001 — never let one call stop the batch
-            log.exception("Scenario %s failed: %s", scenario.slug, exc)
+    try:
+        for index, scenario in enumerate(scenarios):
+            try:
+                if await run_scenario(config, twilio, base_url, scenario):
+                    succeeded += 1
+            except KeyboardInterrupt:
+                log.warning("Interrupted by user")
+                break
+            except Exception as exc:  # noqa: BLE001 — never let one call stop the batch
+                log.exception("Scenario %s failed: %s", scenario.slug, exc)
 
-        if index < len(scenarios) - 1:
-            log.info("Waiting %ds before the next call...", config.gap_between_calls)
-            await asyncio.sleep(config.gap_between_calls)
+            if index < len(scenarios) - 1:
+                log.info("Waiting %ds before the next call...", config.gap_between_calls)
+                await asyncio.sleep(config.gap_between_calls)
+    finally:
+        close_tunnel()
 
     log.info("=" * 72)
     log.info("Done — %d/%d calls produced a real conversation", succeeded, len(scenarios))

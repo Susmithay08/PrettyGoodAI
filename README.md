@@ -60,8 +60,26 @@ committed** — only `.env.example`, with empty values, belongs in the repo.
 | `ELEVENLABS_VOICE_ID_FEMALE`, `..._MALE` | Voice IDs from your ElevenLabs voice library |
 | `DEEPGRAM_API_KEY` | [Deepgram console](https://console.deepgram.com) |
 | `ANTHROPIC_API_KEY` | [Anthropic console](https://console.anthropic.com/settings/keys) |
-| `NGROK_AUTH_TOKEN` | [ngrok dashboard](https://dashboard.ngrok.com/get-started/your-authtoken) |
+| `NGROK_AUTH_TOKEN` | Optional — only used if cloudflared isn't installed |
 | `TARGET_PHONE_NUMBER` | `+18054398008` — the assessment line, do not change |
+
+### The public tunnel
+
+Twilio needs to reach your local server, so `main.py` opens a tunnel automatically. It
+tries three things in order:
+
+1. **`PUBLIC_URL`** from `.env`, if you already have a public HTTPS endpoint.
+2. **cloudflared quick tunnel** — the default. No account, no signup:
+   ```bash
+   winget install --id Cloudflare.cloudflared --scope user     # Windows
+   brew install cloudflared                                    # macOS
+   ```
+3. **ngrok** via `NGROK_AUTH_TOKEN`, as a fallback.
+
+cloudflared is preferred because **Windows Defender quarantines `ngrok.exe` on sight** —
+it ships classified as `PUA:Win32/Ngrok`, and with PUA protection enabled (the default)
+you get `OSError: [WinError 225]`. Clearing that needs local admin. cloudflared isn't
+flagged and needs no privileges.
 
 Optional overrides (`CLAUDE_MODEL`, `DEEPGRAM_MODEL`, `SERVER_PORT`, `PUBLIC_URL`,
 `MAX_CALL_SECONDS`, `GAP_BETWEEN_CALLS`) are documented in `.env.example`.
@@ -148,6 +166,7 @@ voice_bot/
   voice.py              ElevenLabs TTS (μ-law 8 kHz out)
   transcriber.py        Deepgram streaming STT (μ-law 8 kHz in)
   audio.py              G.711 μ-law codec, gain, framing
+  tunnel.py             public HTTPS tunnel (cloudflared / ngrok / PUBLIC_URL)
   recorder.py           transcript writing + Twilio MP3 download
 transcripts/            generated
 recordings/             generated
@@ -159,9 +178,16 @@ BUG_REPORT.md           findings
 
 ## Troubleshooting
 
-**Twilio never connects the stream.** The ngrok URL must be reachable and HTTPS. Check
-`GET <ngrok-url>/health` returns `{"ok": true}`. Twilio's debugger shows the exact webhook
-error.
+**`OSError: [WinError 225] ... contains a virus or potentially unwanted software`.**
+Windows Defender quarantined `ngrok.exe`. Install cloudflared instead — the bot prefers it
+automatically:
+```bash
+winget install --id Cloudflare.cloudflared --scope user
+```
+
+**Twilio never connects the stream.** The tunnel URL must be reachable and HTTPS. Check
+`GET <tunnel-url>/health` returns `{"ok": true}`. Twilio's debugger shows the exact webhook
+error. A fresh quick-tunnel hostname can take a few seconds to resolve in DNS.
 
 **Bot talks over the agent.** Raise `ENDPOINT_DELAY` in `server.py` (default `0.65`).
 

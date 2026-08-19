@@ -35,6 +35,7 @@ class Speaker:
         self._voice_id = voice_id
         self._model = model
         self._gain = gain
+        self._warned = False
         self._settings = {
             "stability": stability,
             "similarity_boost": similarity_boost,
@@ -67,7 +68,19 @@ class Speaker:
             )
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
-            log.error("ElevenLabs %s: %s", exc.response.status_code, exc.response.text[:300])
+            status = exc.response.status_code
+            if status == 402 and not self._warned:
+                # Every call will fail this way, and the symptom is a silent bot
+                # rather than a crash — so say exactly what is wrong, once.
+                self._warned = True
+                log.error(
+                    "ElevenLabs rejected voice %s with HTTP 402: %s\n"
+                    "    This plan cannot use library/professional voices via the API.\n"
+                    "    Pick a `premade` voice: python -m voice_bot.voices",
+                    self._voice_id, exc.response.text[:200],
+                )
+            else:
+                log.error("ElevenLabs %s: %s", status, exc.response.text[:300])
             return b""
         except httpx.HTTPError as exc:
             log.error("ElevenLabs request failed: %s", exc)

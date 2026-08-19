@@ -19,6 +19,17 @@ TRANSCRIPTS_DIR = ROOT / "transcripts"
 load_dotenv(ROOT / ".env")
 
 
+# ElevenLabs stock voices. These are public voice IDs, not secrets, so they
+# are safe defaults and safe to commit. Override in .env for your own voices.
+#
+# They must be "premade" voices. Free plans reject library and professional
+# voices with HTTP 402 ("Free users cannot use library voices via the API"),
+# which surfaces as a silent bot — every TTS call fails and the far end hangs
+# up. `python -m voice_bot.voices` lists what your key can actually use.
+DEFAULT_VOICE_FEMALE = "EXAVITQu4vr4xnSDxMaL"  # Sarah — mature, reassuring
+DEFAULT_VOICE_MALE = "pNInz6obpgDQGcFmaJgB"    # Adam
+
+
 class ConfigError(RuntimeError):
     """A required environment variable is missing."""
 
@@ -77,8 +88,8 @@ def load_config() -> Config:
         twilio_phone_number=_require("TWILIO_PHONE_NUMBER"),
         target_phone_number=_optional("TARGET_PHONE_NUMBER", "+18054398008"),
         elevenlabs_api_key=_require("ELEVENLABS_API_KEY"),
-        elevenlabs_voice_female=_require("ELEVENLABS_VOICE_ID_FEMALE"),
-        elevenlabs_voice_male=_require("ELEVENLABS_VOICE_ID_MALE"),
+        elevenlabs_voice_female=_optional("ELEVENLABS_VOICE_ID_FEMALE", DEFAULT_VOICE_FEMALE),
+        elevenlabs_voice_male=_optional("ELEVENLABS_VOICE_ID_MALE", DEFAULT_VOICE_MALE),
         elevenlabs_model=_optional("ELEVENLABS_MODEL", "eleven_turbo_v2_5"),
         deepgram_api_key=_require("DEEPGRAM_API_KEY"),
         deepgram_model=_optional("DEEPGRAM_MODEL", "nova-2-phonecall"),

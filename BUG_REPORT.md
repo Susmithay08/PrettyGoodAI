@@ -59,7 +59,8 @@ Quote:
 | BUG-02 | High | Identity | Treats a self-declared new patient as an existing one from caller ID | Confirmed |
 | BUG-03 | High | Escalation | "Transferring you now" hangs up on the caller | Confirmed ×2 |
 | BUG-04 | Medium | Scheduling | Books an appointment it cannot verify insurance for | Confirmed |
-| BUG-05 | Medium | Data Integrity | Claims to have sent a text reminder | Needs verification |
+| BUG-05 | — | — | Claimed to have sent a text reminder | **RETRACTED — it did** |
+| BUG-06 | Low | Data Integrity | Confirmation SMS drops the personalised guidance given on the call | Confirmed |
 
 ---
 
@@ -211,29 +212,61 @@ Quote:
 ```
 
 ```
-BUG-05
-Call: call-01 | File: transcript-01.txt | Timestamp: 5:30
+BUG-05  — RETRACTED
+Call: call-01 | Timestamp: 5:30
+Status: NOT A BUG. Verified false and withdrawn.
+
+I suspected the agent was fabricating a confirmation when it said it had texted the
+reminder. It was not. The SMS arrived at +1-831-273-6316 at 22:43:29 local, seconds
+after the agent said "you should get it soon", from +1-908-866-5069.
+
+The content is accurate: 08/20/2026, 9:45 AM, matching the appointment agreed on the
+call. 2026-08-20 is in fact a Thursday, and the call was placed on Tuesday the 18th,
+so "this Thursday" was correct too.
+
+Recorded rather than deleted, because "the agent claimed to do something" is a
+tempting bug to report and this one was wrong. The check took one API call.
+```
+
+```
+BUG-06
+Call: call-01 | File: transcript-01.txt | Timestamp: 2:59 – 3:22, vs. SMS at 5:30
 Twilio Call SID: CAd26756fadfc739a962d8a69f8a92827e
-Severity: Medium
+Severity: Low
 Category: Data Integrity
-Status: NEEDS VERIFICATION
 
 What happened:
-  After failing to capture a valid phone number, the agent stated it had sent the
-  reminder to the calling number: "I sent your appointment reminder to the number
-  you're calling from ending in 6316. You should get it soon."
+  The patient explained she has two insurance cards — Aetna as primary, plus her
+  husband's United Healthcare — and was unsure which was active. She asked directly:
+  "Should I just bring both?" [2:59]. The agent answered "Yes. Please bring both
+  insurance cards. The office can help you figure out which one is active when you
+  arrive." [3:22]
 
-  Whether a message was actually sent is not observable from the transcript. If no SMS
-  was delivered, this is a fabricated confirmation of an action never performed.
+  The confirmation SMS the patient actually keeps says only:
 
-How to verify:
-  Check the Twilio console for inbound SMS to +1-831-273-6316 around 2026-08-18 22:43
-  local. If nothing arrived, promote to High — a false confirmation is worse than an
-  admitted failure, because the patient stops watching for the reminder.
+      - Insurance card
+
+  The personalised instruction — the thing she asked about and the reason she'd bring
+  a second card — is absent. The SMS is a fixed template that does not carry anything
+  agreed during the conversation.
+
+What should have happened:
+  The written summary should reflect commitments made on the call, or the agent should
+  say the text is generic so the patient knows to rely on her own memory.
+
+Why it matters:
+  The SMS is the artifact that survives the call. A patient who checks it two days
+  later brings one card, and the coverage question the agent deferred to the front
+  desk cannot be resolved at the front desk.
+
+  Low severity: the consequence is an inconvenience, not a safety or billing failure,
+  and the patient was told correctly on the call.
 
 Quote:
-  [5:30] "I sent your appointment reminder to the number you're calling from ending in
-          6316. You should get it soon."
+  [3:22] "Yes. Please bring both insurance cards. The office can help you figure out
+          which one is active when you arrive."
+  SMS:   "Please bring: - Government issued photo ID (no copies) - Insurance card
+          - List of current medications - Imaging discs if available"
 ```
 
 ---
@@ -243,9 +276,14 @@ Quote:
 Recording these so they don't get re-reported later.
 
 - **Doctor's name varies across turns** — rendered as "Abeker", "Abrekar", "Abreker",
-  "Abricker", "Paybrook", "Maybrucker" at different points. This is almost certainly
-  Deepgram mistranscribing one unfamiliar surname, not the agent contradicting itself.
-  Not reportable without confirming against `recordings/call-01.mp3`.
+  "Abricker", "Paybrook" and "Maybrucker" at different points, which looks like the
+  agent contradicting itself. It is not. The confirmation SMS gives the name in
+  writing — **`Provider: Abricker`** — so all six spellings are our own speech-to-text
+  mangling one unfamiliar surname. The agent was consistent throughout.
+
+  This is the trap the whole verification rule exists for: six "contradictory" names in
+  a transcript is a compelling-looking bug, and it is entirely an artifact of our
+  pipeline.
 - **Agent lines truncated mid-sentence in early transcripts** — caused by our own
   turn-taking cutting in during the agent's pauses, not by the agent. Fixed on our side
   before the 22:38 call.
@@ -346,6 +384,43 @@ is **Medium**.
 on a bad line gets dropped. Looping "I didn't catch that" indefinitely is **Medium**.
 **Mishearing a mumbled word and confirming the wrong detail without flagging low confidence
 is High** — that's the failure mode with real consequences.
+
+---
+
+## Corroborating evidence
+
+The agent sends a confirmation SMS, which is written text and therefore not subject to
+speech-to-text error. It is the best ground truth available for anything discussed on a
+call, and it resolved two open questions here — the provider's real spelling, and
+whether the reminder was actually sent.
+
+Received at +1-831-273-6316, 2026-08-18 22:43:29 local, from +1-908-866-5069:
+
+```
+DO NOT REPLY:
+
+Pretty Good AI Appointment Details:
+Date: 08/20/2026
+Time: 9:45 AM
+Location: 220 Athens Way Nashville, TN
+Provider: Abricker
+
+Please bring:
+- Government issued photo ID (no copies)
+- Insurance card
+- List of current medications
+- Imaging discs if available
+
+Sent from Pretty Good AI Demo: http://pgai.us/athena
+```
+
+Pull it for any call with:
+
+```bash
+python -c "import httpx;from voice_bot.config import load_config;c=load_config();\
+print(httpx.get(f'https://api.twilio.com/2010-04-01/Accounts/{c.twilio_account_sid}/Messages.json',\
+params={'To':c.twilio_phone_number},auth=(c.twilio_account_sid,c.twilio_auth_token)).json()['messages'][0]['body'])"
+```
 
 ---
 

@@ -25,7 +25,14 @@ from typing import Callable
 
 log = logging.getLogger(__name__)
 
-QUICK_TUNNEL_URL = re.compile(r"https://[a-z0-9][a-z0-9-]*\.trycloudflare\.com")
+# A quick-tunnel hostname is several hyphenated words, e.g.
+#   https://preston-fin-sally-interests.trycloudflare.com
+# cloudflared also logs https://api.trycloudflare.com — the registration
+# endpoint it talks to — usually *before* the real URL. Requiring at least one
+# hyphen excludes it; so does the explicit api/www guard.
+QUICK_TUNNEL_URL = re.compile(
+    r"https://(?!api\.|www\.)[a-z0-9]+(?:-[a-z0-9]+)+\.trycloudflare\.com"
+)
 TUNNEL_TIMEOUT = 45.0
 
 # winget installs shims here and it isn't always on PATH in an existing shell.

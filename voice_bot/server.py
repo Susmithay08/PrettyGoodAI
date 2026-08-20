@@ -45,8 +45,8 @@ AGENT = "AGENT (Pretty Good AI)"
 
 FRAME_SECONDS = 0.02
 PREBUFFER_FRAMES = 20        # 400 ms of jitter buffer before we start pacing
-ENDPOINT_DELAY = 1.6         # silence after a *finished* sentence before we reply
-UNFINISHED_DELAY = 4.0       # ...and longer when they trailed off mid-sentence
+ENDPOINT_DELAY = 1.2         # silence after a *finished* sentence before we reply
+UNFINISHED_DELAY = 3.0       # ...and longer when they trailed off mid-sentence
 GREETING_SILENCE = 2.2       # longer gap required before our very first line
 AGENT_TURN_TIMEOUT = 14.0    # give up waiting and say something anyway
 GREETING_TIMEOUT = 25.0      # IVR preambles can run a while before a real prompt
@@ -311,6 +311,9 @@ class MediaSession:
         self._interrupt_playback = False
         self._marks: set[str] = set()
         self._started_at = time.monotonic()
+        self._out_residual = b""      # bytes left over from a partial frame
+        self._frames_sent = 0         # frames in the current utterance
+        self._next_send = time.monotonic()
 
     # -- main loop ---------------------------------------------------------
 
@@ -549,20 +552,10 @@ class MediaSession:
         if self.done or not text.strip():
             return
 
-        audio = await self.speaker.synthesize(text)
-        if not audio:
-            self.record.note(f"TTS failed, line not spoken: {text[:60]!r}")
-            return
-
-        # Synthesis takes a beat; the agent may have started talking again in
-        # the meantime. Wait for a gap so we don't open on top of them.
+        # Wait for a gap before opening our mouth, not after synthesising.
         await self._wait_for_gap()
         if self.done:
             return
-
-        if self.scenario.quiet:
-            # A shaky connection: dead air before the caller actually speaks.
-            audio = silence(900) + audio
 
         log.info("PATIENT: %s", text)
         self.record.add(PATIENT, text)
@@ -570,23 +563,47 @@ class MediaSession:
 
         self._speaking = True
         self._interrupt_playback = False
+        spoke_anything = False
         try:
-            await self._stream_audio(audio)
+            if self.scenario.quiet:
+                # A shaky connection: dead air before the caller actually speaks.
+                await self._stream_audio(silence(900), flush=False)
+
+            # Play chunks as they arrive rather than waiting for the whole clip.
+            async for chunk in self.speaker.stream(text):
+                if self.done or self._interrupt_playback:
+                    break
+                spoke_anything = True
+                await self._stream_audio(chunk, flush=False)
+            await self._await_playback()
         finally:
             self._speaking = False
+
+        if not spoke_anything:
+            self.record.note(f"TTS produced nothing, line not spoken: {text[:60]!r}")
 
     async def _send_silence(self, milliseconds: int) -> None:
         self.record.note(f"Held {milliseconds}ms of silence")
         await self._stream_audio(silence(milliseconds))
 
-    async def _stream_audio(self, ulaw: bytes) -> None:
-        """Send μ-law to Twilio paced at real time so playback stays interruptible."""
-        frames = chunk_frames(ulaw)
-        next_send = time.monotonic()
+    async def _stream_audio(self, ulaw: bytes, *, flush: bool = True) -> None:
+        """Send μ-law to Twilio paced at real time so playback stays interruptible.
 
-        for index, frame in enumerate(frames):
+        Called incrementally as TTS chunks arrive, so a chunk rarely lands on a
+        20 ms boundary. Leftover bytes carry over to the next call; `flush`
+        pads and emits whatever remains.
+        """
+        data = self._out_residual + ulaw
+        usable = len(data) - (len(data) % FRAME_BYTES)
+        self._out_residual = data[usable:]
+        body = data[:usable]
+        if flush and self._out_residual:
+            body += self._out_residual
+            self._out_residual = b""
+
+        for frame in chunk_frames(body):
             if self.done or self._interrupt_playback:
-                break
+                return
             try:
                 await self.ws.send_text(json.dumps({
                     "event": "media",
@@ -597,19 +614,27 @@ class MediaSession:
                 self.done = True
                 return
 
-            # Burst the first few frames to build a jitter buffer, then pace.
-            if index >= PREBUFFER_FRAMES:
-                next_send += FRAME_SECONDS
-                delay = next_send - time.monotonic()
+            self._frames_sent += 1
+            # Burst the opening frames to build a jitter buffer, then pace so
+            # playback tracks real time and stays interruptible.
+            if self._frames_sent > PREBUFFER_FRAMES:
+                self._next_send += FRAME_SECONDS
+                delay = self._next_send - time.monotonic()
                 if delay > 0:
                     await asyncio.sleep(delay)
             else:
-                next_send = time.monotonic()
+                self._next_send = time.monotonic()
 
-        await self._await_playback(len(frames))
+        if flush:
+            await self._await_playback()
 
-    async def _await_playback(self, frame_count: int) -> None:
+    async def _await_playback(self) -> None:
         """Wait for Twilio to actually play out the buffered tail."""
+        if self._out_residual:
+            await self._stream_audio(b"", flush=True)
+            return
+        frame_count = self._frames_sent
+        self._frames_sent = 0
         mark = uuid.uuid4().hex[:8]
         try:
             await self.ws.send_text(json.dumps({

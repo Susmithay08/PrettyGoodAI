@@ -31,6 +31,7 @@ class PatientBrain:
         self._scenario = scenario
         self._system = scenario.system_prompt()
         self._history: list[dict] = []
+        self._cache_reads = 0
         self.should_hang_up = False
 
     @property
@@ -77,9 +78,18 @@ class PatientBrain:
                 # A hard ceiling on length. Phone turns are one or two short
                 # sentences; give it room for a paragraph and it writes one.
                 max_tokens=110,
-                system=self._system,
+                # The persona prompt is identical on every turn of a call, so
+                # cache it. Saves re-processing ~1.2k tokens per turn, which is
+                # latency the caller hears as dead air.
+                system=[{
+                    "type": "text",
+                    "text": self._system,
+                    "cache_control": {"type": "ephemeral"},
+                }],
                 messages=messages,
             )
+            usage = response.usage
+            self._cache_reads += getattr(usage, "cache_read_input_tokens", 0) or 0
         except APIError as exc:
             log.error("Claude call failed: %s", exc)
             return ""

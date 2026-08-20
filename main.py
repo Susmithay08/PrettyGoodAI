@@ -75,7 +75,28 @@ def open_tunnel(config: Config) -> tuple[str, object]:
 # One call
 # --------------------------------------------------------------------------
 
-def place_call(config: Config, twilio: TwilioClient, base_url: str, run: server.CallRun) -> str:
+def place_call(
+    config: Config, twilio: TwilioClient, base_url: str, run: server.CallRun,
+    *, attempts: int = 3,
+) -> str:
+    """Dial the test line, retrying transient network failures.
+
+    A one-off TLS reset to api.twilio.com would otherwise abandon the whole
+    scenario before the call was ever placed.
+    """
+    last: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            return _create_call(config, twilio, base_url, run)
+        except Exception as exc:  # noqa: BLE001 — twilio wraps many transports
+            last = exc
+            log.warning("Call attempt %d/%d failed: %s", attempt, attempts, exc)
+            if attempt < attempts:
+                time.sleep(3 * attempt)
+    raise last  # type: ignore[misc]
+
+
+def _create_call(config: Config, twilio: TwilioClient, base_url: str, run: server.CallRun) -> str:
     call = twilio.calls.create(
         to=config.target_phone_number,
         from_=config.twilio_phone_number,

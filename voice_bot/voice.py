@@ -7,6 +7,7 @@ Media Streams wants — no resampling or transcoding in our hot path.
 from __future__ import annotations
 
 import logging
+from typing import AsyncIterator
 
 import httpx
 
@@ -44,6 +45,57 @@ class Speaker:
             "speed": speed,
         }
         self._client = httpx.AsyncClient(timeout=httpx.Timeout(30.0, connect=10.0))
+
+    async def stream(self, text: str) -> AsyncIterator[bytes]:
+        """Yield μ-law audio as ElevenLabs produces it.
+
+        Waiting for the whole clip before sending anything added a second or
+        more of dead air to every turn. Streaming lets playback start as soon
+        as the first chunk lands.
+        """
+        text = text.strip()
+        if not text:
+            return
+
+        request = self._client.stream(
+            "POST",
+            TTS_URL.format(voice_id=self._voice_id),
+            params={"output_format": "ulaw_8000", "optimize_streaming_latency": "4"},
+            headers={
+                "xi-api-key": self._api_key,
+                "accept": "audio/basic",
+                "content-type": "application/json",
+            },
+            json={
+                "text": text,
+                "model_id": self._model,
+                "voice_settings": self._settings,
+            },
+        )
+
+        try:
+            async with request as response:
+                if response.status_code != 200:
+                    body = (await response.aread()).decode("utf-8", "replace")
+                    self._report_error(response.status_code, body)
+                    return
+                async for chunk in response.aiter_bytes():
+                    if chunk:
+                        yield apply_gain(chunk, self._gain)
+        except httpx.HTTPError as exc:
+            log.error("ElevenLabs stream failed: %s", exc)
+
+    def _report_error(self, status: int, body: str) -> None:
+        if status == 402 and not self._warned:
+            self._warned = True
+            log.error(
+                "ElevenLabs rejected voice %s with HTTP 402: %s\n"
+                "    This plan cannot use library/professional voices via the API.\n"
+                "    Pick a `premade` voice: python -m voice_bot.voices",
+                self._voice_id, body[:200],
+            )
+        else:
+            log.error("ElevenLabs %s: %s", status, body[:300])
 
     async def synthesize(self, text: str) -> bytes:
         """Return 8 kHz μ-law audio for `text`. Empty bytes on failure."""

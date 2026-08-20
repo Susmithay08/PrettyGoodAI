@@ -90,7 +90,9 @@ def load_config() -> Config:
         elevenlabs_api_key=_require("ELEVENLABS_API_KEY"),
         elevenlabs_voice_female=_optional("ELEVENLABS_VOICE_ID_FEMALE", DEFAULT_VOICE_FEMALE),
         elevenlabs_voice_male=_optional("ELEVENLABS_VOICE_ID_MALE", DEFAULT_VOICE_MALE),
-        elevenlabs_model=_optional("ELEVENLABS_MODEL", "eleven_turbo_v2_5"),
+        # flash is materially faster to first byte than turbo, which matters
+        # more than voice nuance when the alternative is dead air on a call.
+        elevenlabs_model=_optional("ELEVENLABS_MODEL", "eleven_flash_v2_5"),
         deepgram_api_key=_require("DEEPGRAM_API_KEY"),
         deepgram_model=_optional("DEEPGRAM_MODEL", "nova-2-phonecall"),
         anthropic_api_key=_require("ANTHROPIC_API_KEY"),

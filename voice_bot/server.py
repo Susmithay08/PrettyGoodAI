@@ -105,6 +105,7 @@ class CallRun:
     record: CallRecord
     finished: threading.Event = field(default_factory=threading.Event)
     claimed: bool = False  # a media stream has attached to this run
+    tts_dead: bool = False  # text-to-speech is unusable; stop the batch
 
 
 _RUNS: dict[str, CallRun] = {}
@@ -266,6 +267,7 @@ async def media(websocket: WebSocket) -> None:
     finally:
         await session.cleanup()
         run.record.ended_at = time.time()
+        run.tts_dead = session.tts_dead
         run.finished.set()
 
 
@@ -281,6 +283,7 @@ class MediaSession:
         self.record = run.record
         self.stream_sid: str | None = None
         self.done = False
+        self.tts_dead = False
 
         gain = 0.35 if self.scenario.quiet else 1.0
         speed = 0.88 if self.scenario.quiet else 1.0
@@ -581,6 +584,14 @@ class MediaSession:
 
         if not spoke_anything:
             self.record.note(f"TTS produced nothing, line not spoken: {text[:60]!r}")
+            if self.speaker.fatal_error:
+                # No audio will ever come. Hang up now rather than sit mute
+                # while the agent waits and eventually drops the call.
+                log.error("Text-to-speech is unavailable — abandoning call: %s",
+                          self.speaker.fatal_error)
+                self.record.note(f"ABANDONED — TTS unavailable: {self.speaker.fatal_error}")
+                self.tts_dead = True
+                self.done = True
 
     async def _send_silence(self, milliseconds: int) -> None:
         self.record.note(f"Held {milliseconds}ms of silence")

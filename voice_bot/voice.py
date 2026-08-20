@@ -37,6 +37,9 @@ class Speaker:
         self._model = model
         self._gain = gain
         self._warned = False
+        # Set when the provider reports an unrecoverable account problem
+        # (out of credits, voice needs a paid plan). Retrying cannot help.
+        self.fatal_error: str | None = None
         self._settings = {
             "stability": stability,
             "similarity_boost": similarity_boost,
@@ -86,6 +89,14 @@ class Speaker:
             log.error("ElevenLabs stream failed: %s", exc)
 
     def _report_error(self, status: int, body: str) -> None:
+        # 401 quota_exceeded / 402 paid_plan_required are both terminal: every
+        # later request fails the same way. Flag it so the run can stop rather
+        # than place call after call that produces no audio.
+        if status in (401, 402) and (
+            "quota_exceeded" in body or "paid_plan_required" in body
+        ):
+            self.fatal_error = body[:200]
+
         if status == 402 and not self._warned:
             self._warned = True
             log.error(

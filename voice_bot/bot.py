@@ -72,6 +72,14 @@ class PatientBrain:
         if nudge:
             messages.append({"role": "user", "content": f"[{nudge}]"})
 
+        # The request must end on a user turn. It won't if we spoke twice in a
+        # row — which happens whenever the agent stays silent through a turn.
+        if messages[-1]["role"] != "user":
+            messages.append({
+                "role": "user",
+                "content": "[The line is silent. The agent has not responded.]",
+            })
+
         try:
             response = await self._client.messages.create(
                 model=self._model,

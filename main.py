@@ -39,6 +39,10 @@ logging.getLogger("websockets").setLevel(logging.WARNING)
 log = logging.getLogger("main")
 
 
+class TTSUnavailable(RuntimeError):
+    """Text-to-speech stopped working — every later call would be silent."""
+
+
 # --------------------------------------------------------------------------
 # Infrastructure
 # --------------------------------------------------------------------------
@@ -148,6 +152,9 @@ async def run_scenario(
     minutes, seconds = divmod(int(run.record.duration), 60)
     log.info("Call finished — %d turns, %d:%02d", turns, minutes, seconds)
 
+    if run.tts_dead:
+        raise TTSUnavailable("text-to-speech failed mid-call")
+
     write_transcript(run.record)
     await download_recording(
         run.record.call_sid or call_sid,
@@ -161,6 +168,39 @@ async def run_scenario(
 # --------------------------------------------------------------------------
 # CLI
 # --------------------------------------------------------------------------
+
+async def preflight(config: Config) -> bool:
+    """Confirm text-to-speech works before spending money on calls.
+
+    A dead TTS account doesn't crash — it produces a silent caller, and the
+    far end hangs up after ~45s. Left unchecked that burns the whole batch.
+    """
+    from voice_bot.voice import Speaker
+
+    speaker = Speaker(
+        api_key=config.elevenlabs_api_key,
+        voice_id=config.voice_id("female"),
+        model=config.elevenlabs_model,
+    )
+    try:
+        audio = await speaker.synthesize("Testing one two three.")
+    finally:
+        await speaker.aclose()
+
+    if audio:
+        log.info("Preflight OK — text-to-speech returned %.1fs of audio", len(audio) / 8000)
+        return True
+
+    log.error("=" * 72)
+    log.error("PREFLIGHT FAILED — text-to-speech produced no audio.")
+    if speaker.fatal_error:
+        log.error("  %s", speaker.fatal_error)
+    log.error("  Calls would connect but the caller would be silent, and the")
+    log.error("  far end would hang up. Not dialling.")
+    log.error("  Check the account with: python -m voice_bot.voices")
+    log.error("=" * 72)
+    return False
+
 
 def print_scenarios() -> None:
     print(f"\n{'#':<4}{'Name':<42}{'Voice':<9}Bug target")
@@ -185,6 +225,9 @@ async def amain(args: argparse.Namespace) -> int:
     if args.voice:
         scenarios = [dataclasses.replace(s, voice=args.voice) for s in scenarios]
 
+    if not await preflight(config):
+        return 2
+
     start_server(config)
     try:
         base_url, close_tunnel = open_tunnel(config)
@@ -205,6 +248,13 @@ async def amain(args: argparse.Namespace) -> int:
                     succeeded += 1
             except KeyboardInterrupt:
                 log.warning("Interrupted by user")
+                break
+            except TTSUnavailable:
+                log.error("=" * 72)
+                log.error("STOPPING THE BATCH — text-to-speech is no longer working.")
+                log.error("  The caller would be silent on every remaining call.")
+                log.error("  Scenarios %s onward were not attempted.", scenario.slug)
+                log.error("=" * 72)
                 break
             except Exception as exc:  # noqa: BLE001 — never let one call stop the batch
                 log.exception("Scenario %s failed: %s", scenario.slug, exc)

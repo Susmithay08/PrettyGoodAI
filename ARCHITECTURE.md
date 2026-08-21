@@ -3,7 +3,7 @@
 ## How it works
 
 The bot is a **custom four-service pipeline stitched together over a Twilio Media Streams
-WebSocket**. `main.py` opens an ngrok tunnel, starts a FastAPI server, and asks Twilio to
+WebSocket**. `main.py` opens a public tunnel, starts a FastAPI server, and asks Twilio to
 dial the test line with TwiML containing `<Connect><Stream>` — which gives us a
 bidirectional 8 kHz μ-law audio socket for the duration of the call. From there a single
 `MediaSession` object owns the conversation: inbound frames go straight to a Deepgram
@@ -45,7 +45,7 @@ respond differently to something that sounds synthetic. Its native μ-law 8 kHz 
 the deciding technical factor. **Claude Sonnet** for the brain: fast enough not to add dead
 air between turns, and strong enough to hold a persona under pressure — scenario 16 requires
 believing a fabricated medical rename and pushing back when contradicted, which a smaller
-model tends to abandon. **FastAPI + ngrok over a deployed host** because the only thing
+model tends to abandon. **FastAPI plus a throwaway tunnel over a deployed host** because the only thing
 being tested is a phone call; a deployment pipeline would add an hour and change nothing
 about the results.
 
@@ -60,6 +60,44 @@ the prompt where the conversational judgment already lives. And `config.py` hard
 `TARGET_PHONE_NUMBER` is anything but the assessment line — a bot that autodials should not
 be one config typo away from calling a stranger.
 
+## What the calls changed
+
+Almost nothing about turn-taking survived contact with the real agent, and that iteration
+is the part of this project I'd point at first.
+
+**The bot answered the IVR.** Deepgram endpoints on every pause, and a phone tree pauses
+between prompts, so "this call may be recorded" looked exactly like a finished turn. The
+bot opened one second into the disclaimer and then talked over the language menu; the two
+sides were misaligned for the rest of the call. Fixed by treating automated preamble as
+non-speech and requiring a longer settled gap (2.2s) before the opening line than
+mid-call (1.2s).
+
+**Then it answered half-sentences.** Their agent delivers one thought in bursts with
+multi-second gaps — *"The earliest slot on Thursday is"* … *"9:45 with Dr. X"*. A flat
+silence threshold can't tell that from a finished turn. Two mechanisms fixed it: terminal
+punctuation as a completeness signal (Deepgram punctuates a sentence it considers
+finished, and leaves a truncated one bare), so a fragment waits 3.0s instead of 1.2s; and
+discarding a generated reply outright if the agent resumes while Claude is still thinking.
+
+**The caller didn't sound like one.** Early turns averaged 36.7 words, peaking at 71 —
+nobody stacks three questions into one breath on a phone. Hard length rules plus dropping
+`max_tokens` to 110 brought it to 11.1 words. That single change did more for realism than
+any voice tuning.
+
+**Latency was worth measuring rather than guessing.** I assumed TTS was the bottleneck and
+added streaming; it saved 0.14s. The real budget was 1.6s of silence-waiting plus 1.6s of
+Claude. I also added prompt caching expecting a speedup — it cached correctly and changed
+latency not at all, because generation dominates. It stayed for the cost saving, not as a
+performance win. Final median response is ~2s.
+
+**Failures that don't crash are the expensive ones.** When the ElevenLabs quota ran out
+mid-batch, nothing errored — the bot generated fine lines, sent no audio, and the far end
+hung up on silence. Ten scenarios burned before anyone noticed. There's now a preflight
+that synthesizes one line before dialling, and an abort that stops the batch rather than
+working through the remaining scenarios mutely. Same category: a dropped Deepgram socket
+made the bot deaf for a whole call and read, in the transcript, as *their* agent going
+silent — which is how a pipeline bug becomes a false bug report.
+
 ## Known limitations
 
 - **Turn-taking is heuristic.** A 650 ms silence window plus Deepgram's endpoint signal
@@ -67,8 +105,8 @@ be one config typo away from calling a stranger.
   (`ENDPOINT_DELAY`) and was tuned by listening to early calls rather than guessing.
 - **No echo cancellation.** Not needed on a digital call leg, but our own audio would
   confuse the transcriber if the far end looped it back.
-- **ngrok is a single point of failure.** Fine for a test harness; `PUBLIC_URL` exists as
-  the escape hatch for anyone who'd rather not depend on it.
+- **The tunnel is a single point of failure.** Fine for a test harness; `PUBLIC_URL`
+  exists as the escape hatch for anyone who'd rather not depend on it.
 - **Bug detection is human.** The bot generates evidence — transcripts and recordings tied
   to a stated bug target — and I read them. Automating that judgment would mean grading an
   LLM's medical-safety behaviour with another LLM, which I don't trust for a report that

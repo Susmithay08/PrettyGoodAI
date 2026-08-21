@@ -10,7 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 # --------------------------------------------------------------------------
-# Fake identities (see OUR_DECISIONS.md). No real patient data is ever used.
+# Fake identities. No real patient data is ever used.
 # --------------------------------------------------------------------------
 
 FEMALE_PATIENT = """Your name is Sarah Johnson.

@@ -205,7 +205,14 @@ def _report_budget(config: Config, planned: int) -> None:
     except httpx.HTTPError:
         return  # budget info is a nicety; never block a run over it
 
-    remaining = max(0, data.get("character_limit", 0) - data.get("character_count", 0))
+    limit = data.get("character_limit", 0)
+    if not limit:
+        # A scoped API key can synthesize but not read the subscription, which
+        # reports 0/0. Unknown is not the same as empty — say nothing.
+        log.info("ElevenLabs credit balance not visible to this key (scoped key).")
+        return
+
+    remaining = max(0, limit - data.get("character_count", 0))
     affordable = remaining // CREDITS_PER_CALL
     log.info(
         "ElevenLabs credits: %s remaining (~%d call%s at ~%s each)",

@@ -3,6 +3,7 @@
 
     python main.py --scenario 1          # run one scenario
     python main.py --all                 # run all 16, 60s apart
+    python main.py --scenarios 6,7,11-14  # run only specific ones
     python main.py --scenario 7 --voice female
     python main.py --list                # show the scenario table
 
@@ -21,6 +22,7 @@ import sys
 import threading
 import time
 
+import httpx
 import uvicorn
 from twilio.rest import Client as TwilioClient
 
@@ -169,7 +171,55 @@ async def run_scenario(
 # CLI
 # --------------------------------------------------------------------------
 
-async def preflight(config: Config) -> bool:
+def parse_scenario_list(spec: str) -> list[int]:
+    """Parse "6,7,11-14" into [6, 7, 11, 12, 13, 14]."""
+    numbers: list[int] = []
+    for part in spec.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        if "-" in part:
+            start, _, end = part.partition("-")
+            numbers.extend(range(int(start), int(end) + 1))
+        else:
+            numbers.append(int(part))
+    seen: set[int] = set()
+    return [n for n in numbers if not (n in seen or seen.add(n))]
+
+
+# Roughly what one full conversation costs in ElevenLabs credits, measured
+# from real calls: ~40 turns of ~12 words at ~0.5 credits per character.
+CREDITS_PER_CALL = 1500
+
+
+def _report_budget(config: Config, planned: int) -> None:
+    """Warn up front if the account can't fund the whole run."""
+    try:
+        response = httpx.get(
+            "https://api.elevenlabs.io/v1/user/subscription",
+            headers={"xi-api-key": config.elevenlabs_api_key},
+            timeout=30.0,
+        )
+        response.raise_for_status()
+        data = response.json()
+    except httpx.HTTPError:
+        return  # budget info is a nicety; never block a run over it
+
+    remaining = max(0, data.get("character_limit", 0) - data.get("character_count", 0))
+    affordable = remaining // CREDITS_PER_CALL
+    log.info(
+        "ElevenLabs credits: %s remaining (~%d call%s at ~%s each)",
+        f"{remaining:,}", affordable, "" if affordable == 1 else "s", f"{CREDITS_PER_CALL:,}",
+    )
+    if planned > affordable:
+        log.warning(
+            "Planning %d calls but only ~%d are funded. The run will stop when "
+            "credits run out — consider `--scenarios` to pick the ones you need.",
+            planned, affordable,
+        )
+
+
+async def preflight(config: Config, planned: int = 1) -> bool:
     """Confirm text-to-speech works before spending money on calls.
 
     A dead TTS account doesn't crash — it produces a silent caller, and the
@@ -189,6 +239,7 @@ async def preflight(config: Config) -> bool:
 
     if audio:
         log.info("Preflight OK — text-to-speech returned %.1fs of audio", len(audio) / 8000)
+        _report_budget(config, planned)
         return True
 
     log.error("=" * 72)
@@ -219,13 +270,15 @@ async def amain(args: argparse.Namespace) -> int:
 
     if args.scenario:
         scenarios = [get_scenario(args.scenario)]
+    elif args.scenarios:
+        scenarios = [get_scenario(n) for n in parse_scenario_list(args.scenarios)]
     else:
         scenarios = all_scenarios()
 
     if args.voice:
         scenarios = [dataclasses.replace(s, voice=args.voice) for s in scenarios]
 
-    if not await preflight(config):
+    if not await preflight(config, planned=len(scenarios)):
         return 2
 
     start_server(config)
@@ -278,6 +331,10 @@ def main() -> int:
     )
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--scenario", type=int, metavar="N", help="run a single scenario (1-16)")
+    group.add_argument(
+        "--scenarios", metavar="LIST",
+        help="run specific scenarios, e.g. 6,7,11-14 (skips ones already done)",
+    )
     group.add_argument("--all", action="store_true", help="run all 16 scenarios in sequence")
     group.add_argument("--list", action="store_true", help="list the scenarios and exit")
     parser.add_argument(
@@ -288,7 +345,7 @@ def main() -> int:
     if args.list:
         print_scenarios()
         return 0
-    if not args.scenario and not args.all:
+    if not args.scenario and not args.scenarios and not args.all:
         parser.print_help()
         return 1
 

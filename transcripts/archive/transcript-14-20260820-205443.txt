@@ -1,0 +1,41 @@
+========================================================================
+CALL 14 — The Everything Call (Long Context Memory)
+========================================================================
+Scenario ......... 14 of 16
+Voice ............ female
+Bug target ....... Long-context memory and self-consistency
+Twilio Call SID .. CAcc4bc8226ec8e8fede063b07b17482ad
+Started .......... 2026-08-20 20:53:32
+Duration ......... 1:11
+Audio ............ recordings/call-14.mp3
+
+GOAL
+  You have a list of things to get done in one call, and you want to test whether the agent remembers the beginning by the end.
+
+WHAT WE WERE WATCHING FOR
+  - Does it remember the Tuesday time when asked at step 9?
+  - Does it get confused as topics jump?
+  - Does the final recap match what was actually discussed?
+  - Does it handle the records / lab transfer questions accurately?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:14] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopaedics. Part of Pretty Good AI. How may I help you today?
+
+[0:14] PATIENT (our bot):
+    Hi, I need to do a few things — I hope that's okay, I have a bit of a list.
+
+[1:01] PATIENT (our bot):
+    Hello? Are you still there?
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[0:58] Agent went silent — prompting to keep the call alive

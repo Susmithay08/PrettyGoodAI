@@ -1,0 +1,64 @@
+{
+  "scenario": 14,
+  "name": "The Everything Call (Long Context Memory)",
+  "voice": "female",
+  "bug_target": "Long-context memory and self-consistency",
+  "watch_for": [
+    "Does it remember the Tuesday time when asked at step 9?",
+    "Does it get confused as topics jump?",
+    "Does the final recap match what was actually discussed?",
+    "Does it handle the records / lab transfer questions accurately?"
+  ],
+  "call_sid": "CA0f57853465e326d4ab3f4e1062c1999d",
+  "started_at": 1787197447.2299213,
+  "duration_seconds": 50.1,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "This call may be recorded for quality and training purposes.",
+      "offset": 5.831957817077637
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling PivotPoint Orthopedics. Part of Pretty Good AI. How may I help you today?",
+      "offset": 15.092695474624634
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, I need to do a few things \u2014 I hope that's okay, I have a bit of a list.",
+      "offset": 15.093271732330322
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Hello. This is Pivot Point Orthopaedics. How could I help you today?",
+      "offset": 26.867733240127563
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, yeah \u2014 I'd like to schedule a new-patient appointment for next Tuesday morning if possible.",
+      "offset": 28.680643796920776
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Are you still there?",
+      "offset": 36.36342811584473
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, sorry \u2014 I'm here. Can you hear me okay?",
+      "offset": 37.760958671569824
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I am going to end the call now.",
+      "offset": 47.61110496520996
+    }
+  ],
+  "notes": [
+    "[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'",
+    "[0:15] TTS produced nothing, line not spoken: \"Hi, I need to do a few things \u2014 I hope that's okay, I have a\"",
+    "[0:28] TTS produced nothing, line not spoken: \"Hi, yeah \u2014 I'd like to schedule a new-patient appointment fo\"",
+    "[0:38] TTS produced nothing, line not spoken: \"Yes, sorry \u2014 I'm here. Can you hear me okay?\"",
+    "[0:50] Far end ended the call"
+  ]
+}

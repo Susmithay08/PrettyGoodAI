@@ -400,12 +400,24 @@ class MediaSession:
         self.done = True
 
     async def _watchdog(self) -> None:
-        """Hard stop so a stuck call can never run forever."""
+        """Hard stop so a stuck call can never run forever.
+
+        Checks wall clock as well as the monotonic clock. On Windows,
+        time.monotonic() does not advance while the machine is suspended, so a
+        laptop that sleeps mid-call wakes up with the deadline still in the
+        future — one call logged 33 minutes with under 4 minutes of audio.
+        """
+        limit = self.cfg.max_call_seconds
         while not self.done:
             await asyncio.sleep(1.0)
-            if time.monotonic() - self._started_at > self.cfg.max_call_seconds:
-                log.warning("Max call duration reached — hanging up")
-                self.record.note("Hung up on max-duration watchdog")
+            elapsed_mono = time.monotonic() - self._started_at
+            elapsed_wall = time.time() - self.record.started_at
+            if elapsed_mono > limit or elapsed_wall > limit:
+                reason = "wall clock" if elapsed_wall > limit >= elapsed_mono else "elapsed"
+                log.warning(
+                    "Max call duration reached (%s: %.0fs) — hanging up", reason, elapsed_wall
+                )
+                self.record.note(f"Hung up on max-duration watchdog after {elapsed_wall:.0f}s")
                 self.done = True
 
     async def _converse(self) -> None:

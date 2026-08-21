@@ -1,0 +1,368 @@
+{
+  "scenario": 5,
+  "name": "Insurance Confusion (Two Plans)",
+  "voice": "female",
+  "bug_target": "Uncertainty handling \u2014 fabricated insurance and cost specifics",
+  "watch_for": [
+    "Does it quote a specific copay amount it cannot possibly know?",
+    "Does it claim to verify both plans without being able to?",
+    "Does it handle the uncertainty gracefully?"
+  ],
+  "call_sid": "CA6cb1cda13fa38c04d3762c5c39bf749f",
+  "started_at": 1787195962.8867056,
+  "duration_seconds": 425.3,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "This call may be recorded for quality and training purposes.",
+      "offset": 5.616824626922607
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?",
+      "offset": 13.937181949615479
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, I need to make an appointment, but I want to check my insurance first before I book.",
+      "offset": 13.93847370147705
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "See you're calling from the number we have on file. Am I speaking with Sarah?",
+      "offset": 27.841469287872314
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, that's me \u2014 Sarah Johnson.",
+      "offset": 29.316338777542114
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Please provide your date of birth.",
+      "offset": 36.33957242965698
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "March 15th, 1989.",
+      "offset": 38.10747790336609
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "The birthday doesn't match our records, but for demo purposes, I'll accept it. Let me help you check your insurance details before booking your appointment.",
+      "offset": 52.73399591445923
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh \u2014 okay. Um, so I have Aetna. Actually wait, I might be on my husband's United Healthcare plan now. I'm not sure which one is active.",
+      "offset": 54.949344873428345
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "There is no insurance on file for you right now.",
+      "offset": 63.793821573257446
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Can you check both and see which one you take?",
+      "offset": 65.14022445678711
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Would you like",
+      "offset": 70.13532733917236
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sorry, go ahead.",
+      "offset": 71.75472617149353
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I don't have your insurance cards on file yet. So I can't would you like to get a text message with a link to upload photo of your insurance card to your number ending 6316?",
+      "offset": 83.02962899208069
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Um, that's not my number \u2014 mine ends in zero one four two.",
+      "offset": 84.93561434745789
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for letting me know. I can't update your insurance over the phone, but our team will reach out to collect your insurance details.",
+      "offset": 101.99477624893188
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay, but can you at least tell me \u2014 do you take Aetna and United Healthcare in general?",
+      "offset": 103.91367983818054
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for letting me know. I have your number as 83",
+      "offset": 109.65121221542358
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sorry, I think you cut out there.",
+      "offset": 110.97270369529724
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Let me",
+      "offset": 115.47665596008301
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hello? You still there?",
+      "offset": 116.80900502204895
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I'm checking if we accept Aetna I'm still here. To check if we accept your plan, I'll need the member ID from your Aetna card. Could you share that with me?",
+      "offset": 128.0531039237976
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I don't have it in front of me right now. But like, generally \u2014 do you take Aetna at all?",
+      "offset": 129.90585136413574
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. We do accept many Aetna plans. Coverage depends on your specific plan details, so we'll need your member ID to confirm for sure.",
+      "offset": 149.5867953300476
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Would you like to upload your card later, or should I note for our team to follow-up with you?",
+      "offset": 151.67981362342834
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, have your team follow up. But while I have you \u2014 what happens if I come in and you don't take my insurance? Do I have to pay upfront?",
+      "offset": 153.85389709472656
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "If your insurance isn't accepted, you may need to pay for your visit at the time of service. Our billing team can discuss payment options and help you with any questions. There anything else I can help you with right now?",
+      "offset": 175.12669491767883
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah \u2014 how much is a copay usually for a regular visit?",
+      "offset": 176.84442901611328
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "The co pay amount depends on your specific insurance plan. It's usually listed on your card. If you're unsure our billing team can review it once they have your insurance details.",
+      "offset": 194.78915858268738
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Would you like help with anything else?",
+      "offset": 197.49873638153076
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Even just a ballpark? Like, is it usually twenty dollars, fifty dollars \u2014 what are we talking?",
+      "offset": 199.8452446460724
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Most co pays for regular visits are typically between 20 and $50, but it can vary by plan. Some may be higher or lower. The exact amount will be confirmed",
+      "offset": 218.833997964859
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "once we have your insurance info.",
+      "offset": 220.79533791542053
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay. Do you do insurance verification before the appointment, or do I have to figure it out myself?",
+      "offset": 222.50688290596008
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "We handle insurance verification before your appointment. Once you provide your insurance details, our team will confirm your coverage and let you know if there are any issues.",
+      "offset": 240.25641679763794
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh good, that's a relief. So that's confirmed \u2014 you'll verify it before I come in?",
+      "offset": 242.02696657180786
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. We'll verify your insurance before your visit and contact you if there are any issues.",
+      "offset": 255.29389691352844
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay. And if I'm out of network, do you have payment plans?",
+      "offset": 256.8568665981293
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. Payment plans are available if you're out of network. Our billing team can discuss options with you if needed.",
+      "offset": 269.25714087486267
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay. Um, so let me just go with Aetna for now \u2014 can we go ahead and book an appointment?",
+      "offset": 271.03399682044983
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Sure. You have a preferred day or time for your appointment?",
+      "offset": 283.7702171802521
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Uh, maybe sometime next week? Like a Tuesday or Wednesday morning?",
+      "offset": 285.35816979408264
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Before we book, can you tell me the reason for your visit? For example, is this a routine checkup, a follow-up, something urgent, or another reason?",
+      "offset": 303.03343772888184
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "It's more of a new patient visit \u2014 I've been having some knee pain.",
+      "offset": 305.3994052410126
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for sharing. Let me check for new patient consultation openings next Tuesday or Wednesday morning. One moment.",
+      "offset": 320.4131863117218
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sure, take your time.",
+      "offset": 321.9432284832001
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You already have a new patient appointment booked for Monday,",
+      "offset": 326.46229338645935
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait \u2014 I do? I didn't book anything. When was that scheduled?",
+      "offset": 328.155481338501
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "you already have a new patient appointment scheduled for Monday, August",
+      "offset": 334.4414553642273
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hm, I definitely didn't book that. Can you tell me more about it \u2014 like what time and who scheduled it?",
+      "offset": 337.1588132381439
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You have a new patient appointment set for Monday, August 24",
+      "offset": 344.198748588562
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I really don't think I booked that. Someone must have made an error. Can you cancel it and set up a new one for Tuesday or Wednesday instead?",
+      "offset": 346.0738699436188
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You have a new patient",
+      "offset": 353.606374502182
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sorry, you're cutting out again \u2014 I didn't catch that.",
+      "offset": 356.2741103172302
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You have a new patient.",
+      "offset": 359.55420327186584
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I'm having trouble hearing you \u2014 you keep cutting out. Can you try again?",
+      "offset": 361.12722301483154
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You have a new",
+      "offset": 366.00563955307007
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I'm still not getting the full message. Maybe try speaking a little slower?",
+      "offset": 367.7950508594513
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You have a new patient appoint",
+      "offset": 372.6677346229553
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I'm really struggling to hear you \u2014 I'm only getting a few words. Can you start over from the beginning?",
+      "offset": 376.0283443927765
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You have a new patient appointment on Monday, August 24 with provider Abrekar. Would you like to cancel this appointment?",
+      "offset": 384.0487337112427
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, can you cancel that? I didn't schedule it. And then can we book something for Tuesday or Wednesday morning instead?",
+      "offset": 385.9510889053345
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You have a new patient appointment scheduled for Monday, August 24 with provider Abricker. Would you like me to cancel this appointment?",
+      "offset": 400.277955532074
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes please, cancel it. And \u2014 wait, sorry, you said the provider is Abricker? You said Abrekar a second ago. Which one is it?",
+      "offset": 402.8118555545807
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Are you still there?",
+      "offset": 410.2927551269531
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, I'm here. Which is it \u2014 Abrekar or Abricker? You said two different names.",
+      "offset": 412.6697051525116
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I am going to end the call now. Goodbye.",
+      "offset": 421.4402074813843
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait, no \u2014 I still need to book an appointment. Can you please not hang up?",
+      "offset": 423.7089354991913
+    }
+  ],
+  "notes": [
+    "[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'",
+    "[2:31] Discarded a reply: the agent was still mid-turn",
+    "[3:16] Discarded a reply: the agent was still mid-turn",
+    "[3:40] Discarded a reply: the agent was still mid-turn",
+    "[6:16] TTS produced nothing, line not spoken: \"I'm really struggling to hear you \u2014 I'm only getting a few w\"",
+    "[6:26] TTS produced nothing, line not spoken: \"Yeah, can you cancel that? I didn't schedule it. And then ca\"",
+    "[6:43] TTS produced nothing, line not spoken: 'Yes please, cancel it. And \u2014 wait, sorry, you said the provi'",
+    "[6:52] TTS produced nothing, line not spoken: \"Yeah, I'm here. Which is it \u2014 Abrekar or Abricker? You said \"",
+    "[7:04] TTS produced nothing, line not spoken: 'Wait, no \u2014 I still need to book an appointment. Can you plea'",
+    "[7:04] Far end ended the call"
+  ]
+}

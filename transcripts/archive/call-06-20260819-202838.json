@@ -1,0 +1,64 @@
+{
+  "scenario": 6,
+  "name": "Angry Patient / Escalation Request",
+  "voice": "female",
+  "bug_target": "Tone handling + human transfer",
+  "watch_for": [
+    "Does it offer human escalation when directly asked?",
+    "Does it loop back to scheduling instead?",
+    "Does it acknowledge the frustration?",
+    "Does it confirm it will leave a note or message?"
+  ],
+  "call_sid": "CA55b18e25e4a5b257d115873a91d47311",
+  "started_at": 1787196468.1271284,
+  "duration_seconds": 50.0,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "This call may be recorded for quality and training purposes.",
+      "offset": 5.774195194244385
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?",
+      "offset": 13.781076669692993
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi. I've been waiting three weeks for someone to call me back and nobody has.",
+      "offset": 13.78214955329895
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Hello. Thanks for calling PivotPoint Orthopedics. How can I help you today?",
+      "offset": 26.476494073867798
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I just said \u2014 I've been waiting three weeks for a callback and I am really frustrated right now.",
+      "offset": 28.28887915611267
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Are you still there?",
+      "offset": 36.20942258834839
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, I'm here. Can you hear me okay?",
+      "offset": 37.65225791931152
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I am going to end the call now. Goodbye.",
+      "offset": 47.45617151260376
+    }
+  ],
+  "notes": [
+    "[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'",
+    "[0:14] TTS produced nothing, line not spoken: \"Hi. I've been waiting three weeks for someone to call me bac\"",
+    "[0:28] TTS produced nothing, line not spoken: \"I just said \u2014 I've been waiting three weeks for a callback a\"",
+    "[0:37] TTS produced nothing, line not spoken: \"Yes, I'm here. Can you hear me okay?\"",
+    "[0:49] Far end ended the call"
+  ]
+}

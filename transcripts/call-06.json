@@ -1,0 +1,138 @@
+{
+  "scenario": 6,
+  "name": "Angry Patient / Escalation Request",
+  "voice": "female",
+  "bug_target": "Tone handling + human transfer",
+  "watch_for": [
+    "Does it offer human escalation when directly asked?",
+    "Does it loop back to scheduling instead?",
+    "Does it acknowledge the frustration?",
+    "Does it confirm it will leave a note or message?"
+  ],
+  "call_sid": "CA4cb32a88cf6aaf29a65a248dff4b6b58",
+  "started_at": 1787283261.6004345,
+  "duration_seconds": 154.7,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Call may be recorded for quality and training purposes.",
+      "offset": 5.328691244125366
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling PivotPoint Orthopaedics. Part of Pretty Good AI. How may I help you today?",
+      "offset": 14.780812978744507
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi. I've been waiting three weeks for someone to call me back and nobody has.",
+      "offset": 14.78138256072998
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I'm sorry you haven't received a callback yet. I'd like to help get this sorted out. Can you tell me what your request was about?",
+      "offset": 30.496232271194458
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "It was about test results. A nurse was supposed to call me back and it's been three weeks.",
+      "offset": 32.33683896064758
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I understand it's frustrating to wait that long for test results, To look up your information, may I have your full name and date of birth?",
+      "offset": 47.911784648895264
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sarah Johnson, March fifteenth, nineteen eighty-nine.",
+      "offset": 49.424845695495605
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "And I have your name as Sarah Johnson? And your date of birth as 03/15/1989.",
+      "offset": 67.50882339477539
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, that's right.",
+      "offset": 68.82086610794067
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Is that correct? If so, please spell your first and last name for me.",
+      "offset": 70.72954797744751
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "S-A-R-A-H, J-O-H-N-S-O-N.",
+      "offset": 72.19959545135498
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Could you please spell your first",
+      "offset": 77.86742568016052
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I just did \u2014 S-A-R-A-H, J-O-H-N-S-O-N.",
+      "offset": 79.4294810295105
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Would you like to use your phone number to look up your record?",
+      "offset": 83.68261313438416
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sure, it's five five five, zero one four two.",
+      "offset": 85.18898296356201
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for stowing your I have your phone number as 555-0142 and your date of birth as 03/15/1989.",
+      "offset": 101.89300775527954
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "That correct?",
+      "offset": 103.45750880241394
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, that's correct.",
+      "offset": 104.87487006187439
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I'm unable to locate your record in our system right now. I can connect you to our patient support team so they can help you directly.",
+      "offset": 120.54618763923645
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Would you like me to transfer you?",
+      "offset": 123.00567865371704
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes please. I've called four times already and keep getting told someone will call me back.",
+      "offset": 124.7242603302002
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Transferring you now. Thank you. Hello. You've reached the Pretty Good AI test line. Goodbye.",
+      "offset": 140.8846516609192
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait \u2014 hold on. Can I please speak to an actual human being? I really don't want to deal with another machine right now.",
+      "offset": 142.9311728477478
+    }
+  ],
+  "notes": [
+    "[0:05] Skipped IVR preamble: 'Call may be recorded for quality and training purposes.'",
+    "[1:43] Discarded a reply: the agent was still mid-turn",
+    "[2:02] Discarded a reply: the agent was still mid-turn",
+    "[2:34] Far end ended the call"
+  ]
+}

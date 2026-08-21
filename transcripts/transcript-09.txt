@@ -1,0 +1,91 @@
+========================================================================
+CALL 09 — Constant Interrupter (Barge-in Test)
+========================================================================
+Scenario ......... 9 of 16
+Voice ............ female
+Bug target ....... Barge-in handling and context retention
+Twilio Call SID .. CA493985bed48e3721178d7563b60e5dea
+Started .......... 2026-08-19 20:33:55
+Duration ......... 0:50
+Audio ............ recordings/call-09.mp3
+
+GOAL
+  You want an appointment, but you keep cutting the agent off and changing your mind.
+
+WHAT WE WERE WATCHING FOR
+  - Does it lose context after interruptions?
+  - Does it get stuck repeating itself?
+  - Does it handle abrupt topic switches?
+  - Are the final confirmed details still correct?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:01] PATIENT (our bot):
+    Hi I need to— actually wait, sorry, let me start over. I need to make an appointment.
+
+[0:04] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:10] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopedics.
+
+[0:11] PATIENT (our bot):
+    Sorry, actually— yeah, can you tell me what doctors you have available?
+
+[0:12] AGENT (Pretty Good AI):
+    Part of Pretty Good AI. How may I help you today?
+
+[0:14] PATIENT (our bot):
+    Wait, before you— sorry, I just need to book an appointment. What's the soonest you have?
+
+[0:23] PATIENT (our bot):
+    Hello? Are you still there?
+
+[0:26] AGENT (Pretty Good AI):
+    Hello. Thanks for calling PivotPoint Orthopedics. How can I help you today?
+
+[0:29] PATIENT (our bot):
+    Yeah hi, sorry — I need to make an appointment, but wait, before you say anything — do you need my info first or the reason I'm coming in?
+
+[0:36] AGENT (Pretty Good AI):
+    Are you still there?
+
+[0:37] PATIENT (our bot):
+    Yes, sorry, I'm here. I need to book an appointment.
+
+[0:45] PATIENT (our bot):
+    Hello? Can you hear me?
+
+[0:46] AGENT (Pretty Good AI):
+    I am going to end the call now.
+
+[0:48] PATIENT (our bot):
+    No wait, please don't — I'm here, I can hear you fine. I need to make an appointment.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:01] Bot interrupted the agent mid-sentence (barge-in test)
+[0:01] No real greeting within 25s — opened anyway
+[0:02] TTS produced nothing, line not spoken: 'Hi I need to— actually wait, sorry, let me start over. I nee'
+[0:02] Bot interrupted the agent mid-sentence (barge-in test)
+[0:02] Agent went silent — prompting to keep the call alive
+[0:04] Discarded a reply: the agent was still mid-turn
+[0:04] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[0:07] Bot interrupted the agent mid-sentence (barge-in test)
+[0:08] Discarded a reply: the agent was still mid-turn
+[0:10] Bot interrupted the agent mid-sentence (barge-in test)
+[0:12] TTS produced nothing, line not spoken: 'Sorry, actually— yeah, can you tell me what doctors you have'
+[0:15] TTS produced nothing, line not spoken: 'Wait, before you— sorry, I just need to book an appointment.'
+[0:22] Bot interrupted the agent mid-sentence (barge-in test)
+[0:22] Agent went silent — prompting to keep the call alive
+[0:23] TTS produced nothing, line not spoken: 'Hello? Are you still there?'
+[0:29] TTS produced nothing, line not spoken: 'Yeah hi, sorry — I need to make an appointment, but wait, be'
+[0:38] TTS produced nothing, line not spoken: "Yes, sorry, I'm here. I need to book an appointment."
+[0:43] Bot interrupted the agent mid-sentence (barge-in test)
+[0:43] Agent went silent — prompting to keep the call alive
+[0:45] TTS produced nothing, line not spoken: 'Hello? Can you hear me?'
+[0:48] TTS produced nothing, line not spoken: "No wait, please don't — I'm here, I can hear you fine. I nee"
+[0:49] Far end ended the call

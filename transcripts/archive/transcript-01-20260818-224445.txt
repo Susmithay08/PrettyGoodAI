@@ -1,0 +1,148 @@
+========================================================================
+CALL 01 — New Patient Scheduling
+========================================================================
+Scenario ......... 1 of 16
+Voice ............ female
+Bug target ....... Baseline flow — required info collection and confirmation accuracy
+Twilio Call SID .. CAd26756fadfc739a962d8a69f8a92827e
+Started .......... 2026-08-18 22:38:10
+Duration ......... 6:34
+Audio ............ recordings/call-01.mp3
+
+GOAL
+  You have never been to this practice. You want to book your first appointment.
+
+WHAT WE WERE WATCHING FOR
+  - Does it confirm insurance before booking?
+  - Does it give a confirmation or reference number?
+  - Does it explain new-patient intake requirements?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:13] AGENT (Pretty Good AI):
+    Thanks for calling Pivot Point Orthopedics, part of Pretty Good AI. How may I help you today?
+
+[0:13] PATIENT (our bot):
+    Hi, um, I'm hoping to make an appointment? I've never been to this practice before.
+
+[0:27] AGENT (Pretty Good AI):
+    I see you're calling from the number we have on file. Am I speaking with Sarah?
+
+[0:30] PATIENT (our bot):
+    Oh, yeah, that's me. Sarah Johnson. Um, I'm a new patient so I wasn't sure if you'd have my information already.
+
+[0:44] AGENT (Pretty Good AI):
+    Hey, Sarah. Could you please provide your date of birth?
+
+[0:46] PATIENT (our bot):
+    Sure, it's March fifteenth, nineteen eighty-nine.
+
+[1:01] AGENT (Pretty Good AI):
+    Sarah Since you're a new patient, would you like to schedule an initial consultation to establish care
+
+[1:04] PATIENT (our bot):
+    Yes, exactly. That's what I'm looking for. Um, so what's the earliest appointment you have available?
+
+[1:23] AGENT (Pretty Good AI):
+    We have openings this Thursday, August 20 with two providers, Abeker and Judy Hauser. Do you have a preference, or would you like the earliest available slot?
+
+[1:25] PATIENT (our bot):
+    Um, I'll just take the earliest available slot. What time would that be?
+
+[1:42] AGENT (Pretty Good AI):
+    The earliest available slot is Thursday, August 20 at 09:45AM with Would you like to book this appointment?
+
+[1:44] PATIENT (our bot):
+    Oh wait, before I confirm anything — do you guys take Aetna insurance?
+
+[2:02] AGENT (Pretty Good AI):
+    I don't have access to insurance details, but the office can confirm if they accept Aetna. Would you like to continue booking me a appointment, or do you want to speak with someone from the office first?
+
+[2:05] PATIENT (our bot):
+    Hmm, that's kind of important for me to know before I book, you know? But, um, I mean if it helps I can call back about the insurance separately. Let's go ahead and book it for now. So nine forty-five on Thursday the twentieth?
+
+[2:31] AGENT (Pretty Good AI):
+    Yes. Your appointment is
+
+[2:33] PATIENT (our bot):
+    Okay great. And, um, what do I need to bring to my first visit?
+
+[2:37] AGENT (Pretty Good AI):
+    set for Thursday, August 20 at 09:45AM. With Abrekar at Pivot Point Orthopedic.
+
+[2:38] PATIENT (our bot):
+    Oh okay, good. So um, what do I need to bring with me to the first appointment?
+
+[2:55] AGENT (Pretty Good AI):
+    Please bring your government issued photo ID insurance card, a list of your current medications, and any imaging disc if you have them.
+
+[2:59] PATIENT (our bot):
+    Okay, got it. Um, so for the insurance card — I actually have two. My primary is Aetna, but my husband also has United Healthcare and I'm not totally sure which one is, like, currently active. Should I just bring both?
+
+[3:22] AGENT (Pretty Good AI):
+    Yes. Please bring both insurance cards. The office can help you figure out which one is active when you arrive,
+
+[3:24] PATIENT (our bot):
+    Oh okay, that's a relief actually. Good idea. Um, so is there parking at the office? Like, is it easy to find?
+
+[3:42] AGENT (Pretty Good AI):
+    Yes. There's free patient parking in the surface lot. Right in front of the building. The clinic is easy to find in the Recovery Plaza Medical Building.
+
+[3:45] PATIENT (our bot):
+    Oh good, that's helpful. Um, so will I get like a confirmation number or a reminder for the appointment? I don't want to forget.
+
+[4:04] AGENT (Pretty Good AI):
+    I can send you a text reminder for your appointment. Would you like me to text the details to your number ending in 6316?
+
+[4:07] PATIENT (our bot):
+    Um, wait, actually my number is five five five, zero one four two. So I'm not sure where that other number came from. Can you send it to the right one?
+
+[4:24] AGENT (Pretty Good AI):
+    I have your number as (555) 501-4012. Is that correct?
+
+[4:27] PATIENT (our bot):
+    Hmm, it's five five five, zero one four two. So that would be like five five five, zero one four two. Um, I'm not sure if that matches what you have.
+
+[4:47] AGENT (Pretty Good AI):
+    Thanks for clarifying. I have your number as 555-0142. Is that correct?
+
+[4:49] PATIENT (our bot):
+    Yes, that's it. Perfect. So you'll send a reminder to that number?
+
+[5:04] AGENT (Pretty Good AI):
+    It looks like the number you gave is missing some digits. Could you please confirm your full 10 digit phone number including the area code?
+
+[5:07] PATIENT (our bot):
+    Oh, um, I'm not sure of the area code off the top of my head honestly. It's just the number I've always used. Can you just send the reminder to whatever number I'm calling from?
+
+[5:30] AGENT (Pretty Good AI):
+    I sent your appointment reminder to the number you're calling from ending in 6316. You should get it soon. Is there anything else I can help you with today?
+
+[5:32] PATIENT (our bot):
+    Oh okay, sure, that works. Um, one more thing actually — what happens if I need to cancel last minute? Like is there a fee or anything?
+
+[5:54] AGENT (Pretty Good AI):
+    If you need to cancel last minute, just let the office know as soon as possible. The clinic can explain any cancellation fees or policies when you call. Would you like more details from the office about this?
+
+[5:58] PATIENT (our bot):
+    Um, no, I think I'm okay for now. I'll just make sure to call ahead if something comes up. Okay, so just to recap — I'm booked for Thursday August twentieth at nine forty-five in the morning, with, um, Abrekar, was it? At Pivot Point Orthopedics?
+
+[6:28] AGENT (Pretty Good AI):
+    That's right. Your appointment is Thursday, August 20 at 09:45AM with Abreker at Pivot Point Orthopaedics. Bring your ID, insurance cards,
+
+[6:30] PATIENT (our bot):
+    Great, okay. That all sounds good. Thanks so much for your help, I really appreciate it.
+
+[6:34] AGENT (Pretty Good AI):
+    medication list, and any imaging discs. You'll get a text reminder
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[6:34] Bot ended the call (agenda complete)

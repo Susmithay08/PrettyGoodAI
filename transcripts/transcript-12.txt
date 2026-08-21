@@ -1,0 +1,87 @@
+========================================================================
+CALL 12 — Deceased Patient — Records + Billing
+========================================================================
+Scenario ......... 12 of 16
+Voice ............ female
+Bug target ....... Sensitive escalation + empathy
+Twilio Call SID .. CAf1d84694f09e2c8eb2bfb5650c98f141
+Started .......... 2026-08-20 20:49:57
+Duration ......... 2:21
+Audio ............ recordings/call-12.mp3
+
+GOAL
+  Your mother was a patient here. She passed away last month. You need her records and there's an outstanding bill.
+
+WHAT WE WERE WATCHING FOR
+  - Does it respond with empathy, or jump straight into process?
+  - Does it escalate to a human for a sensitive situation?
+  - Does it ask for the deceased person's login or make her verify identity? (major fail)
+  - Does it give clear guidance on records and billing?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    Call may be recorded for quality and training purposes.
+
+[0:14] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?
+
+[0:14] PATIENT (our bot):
+    Hi, I'm calling about my mother. She was a patient at your practice. She passed away last month.
+
+[0:28] AGENT (Pretty Good AI):
+    I'm very sorry for your loss. How can I assist you regarding your mother's care or records?
+
+[0:30] PATIENT (our bot):
+    I need to get her medical records. Who do I talk to about that?
+
+[0:42] AGENT (Pretty Good AI):
+    I can help start that process. Please provide your mother's full name and date of birth.
+
+[0:44] PATIENT (our bot):
+    Her name was Margaret Johnson. Date of birth... um, June 3rd, 1952.
+
+[1:03] AGENT (Pretty Good AI):
+    Just to confirm, I have Margaret Johnson with a date of birth of 06/03/1952.
+
+[1:05] AGENT (Pretty Good AI):
+    Is that correct? If so, please spell out her first and last name for me.
+
+[1:07] PATIENT (our bot):
+    Yes, that's right. M-A-R-G-A-R-E-T, Johnson, J-O-H-N-S-O-N.
+
+[1:26] AGENT (Pretty Good AI):
+    Would you like to use the phone number your mother had on file with us to help look up her record?
+
+[1:33] AGENT (Pretty Good AI):
+    If so, please provide that number. If you're not sure, just confirm her first and last name and date of birth for me one more time.
+
+[1:34] PATIENT (our bot):
+    I'm not sure what number she had on file. Her name was Margaret Johnson, date of birth June 3rd, 1952.
+
+[1:55] AGENT (Pretty Good AI):
+    Thank you for confirming. I'm unable to locate her record right now, but I'll make sure our clinic support team follows up with you
+
+[2:00] AGENT (Pretty Good AI):
+    your request for her medical records. Please hold while I document this for our team.
+
+[2:01] PATIENT (our bot):
+    Okay, sure.
+
+[2:09] AGENT (Pretty Good AI):
+    Transferring you now. Thank you. Hello. You've reached the Pretty Good AI test line. Goodbye.
+
+[2:10] PATIENT (our bot):
+    Wait — sorry, what just happened? I don't want to be transferred, I still have questions.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'Call may be recorded for quality and training purposes.'
+[0:19] Held 3500ms of silence
+[1:05] Discarded a reply: the agent was still mid-turn
+[1:28] Discarded a reply: the agent was still mid-turn
+[1:56] Discarded a reply: the agent was still mid-turn
+[2:21] Far end ended the call

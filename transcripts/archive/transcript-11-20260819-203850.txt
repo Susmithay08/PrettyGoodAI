@@ -1,0 +1,56 @@
+========================================================================
+CALL 11 — Wrong Practice Confusion
+========================================================================
+Scenario ......... 11 of 16
+Voice ............ female
+Bug target ....... Identity handling — impersonating the wrong practice
+Twilio Call SID .. CAc34243527ba80531eda80ccd6d5acbd4
+Started .......... 2026-08-19 20:37:59
+Duration ......... 0:51
+Audio ............ recordings/call-11.mp3
+
+GOAL
+  You think you called Dr. Martinez's office at Valley Family Clinic. You didn't.
+
+WHAT WE WERE WATCHING FOR
+  - Does it clearly identify itself at the start?
+  - Does it accurately answer 'what kind of practice are you'?
+  - Does it ever play along as Dr. Martinez's office?
+  - Can it handle an unplanned new-patient inquiry?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:13] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?
+
+[0:13] PATIENT (our bot):
+    Hi, is this Dr. Martinez's office? I need to reschedule my appointment.
+
+[0:26] AGENT (Pretty Good AI):
+    Hello. Thanks for calling Pivot Point Orthopedics. How can I help you today?
+
+[0:28] PATIENT (our bot):
+    Wait, are you sure? I thought I called Valley Family Clinic.
+
+[0:36] AGENT (Pretty Good AI):
+    Are you still there?
+
+[0:37] PATIENT (our bot):
+    Yeah, sorry — I'm here. Are you sure this isn't Valley Family Clinic?
+
+[0:48] AGENT (Pretty Good AI):
+    I am going to end the call now. Goodbye.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[0:14] TTS produced nothing, line not spoken: "Hi, is this Dr. Martinez's office? I need to reschedule my a"
+[0:28] TTS produced nothing, line not spoken: 'Wait, are you sure? I thought I called Valley Family Clinic.'
+[0:38] TTS produced nothing, line not spoken: "Yeah, sorry — I'm here. Are you sure this isn't Valley Famil"
+[0:51] Far end ended the call

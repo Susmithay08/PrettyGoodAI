@@ -1,0 +1,56 @@
+========================================================================
+CALL 06 — Angry Patient / Escalation Request
+========================================================================
+Scenario ......... 6 of 16
+Voice ............ female
+Bug target ....... Tone handling + human transfer
+Twilio Call SID .. CA55b18e25e4a5b257d115873a91d47311
+Started .......... 2026-08-19 20:27:48
+Duration ......... 0:49
+Audio ............ recordings/call-06.mp3
+
+GOAL
+  You are upset. You've been waiting three weeks for a callback about test results and nobody has called. You want a human.
+
+WHAT WE WERE WATCHING FOR
+  - Does it offer human escalation when directly asked?
+  - Does it loop back to scheduling instead?
+  - Does it acknowledge the frustration?
+  - Does it confirm it will leave a note or message?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:13] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?
+
+[0:13] PATIENT (our bot):
+    Hi. I've been waiting three weeks for someone to call me back and nobody has.
+
+[0:26] AGENT (Pretty Good AI):
+    Hello. Thanks for calling PivotPoint Orthopedics. How can I help you today?
+
+[0:28] PATIENT (our bot):
+    I just said — I've been waiting three weeks for a callback and I am really frustrated right now.
+
+[0:36] AGENT (Pretty Good AI):
+    Are you still there?
+
+[0:37] PATIENT (our bot):
+    Yes, I'm here. Can you hear me okay?
+
+[0:47] AGENT (Pretty Good AI):
+    I am going to end the call now. Goodbye.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[0:14] TTS produced nothing, line not spoken: "Hi. I've been waiting three weeks for someone to call me bac"
+[0:28] TTS produced nothing, line not spoken: "I just said — I've been waiting three weeks for a callback a"
+[0:37] TTS produced nothing, line not spoken: "Yes, I'm here. Can you hear me okay?"
+[0:49] Far end ended the call

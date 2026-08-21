@@ -1,0 +1,41 @@
+{
+  "scenario": 14,
+  "name": "The Everything Call (Long Context Memory)",
+  "voice": "female",
+  "bug_target": "Long-context memory and self-consistency",
+  "watch_for": [
+    "Does it remember the Tuesday time when asked at step 9?",
+    "Does it get confused as topics jump?",
+    "Does the final recap match what was actually discussed?",
+    "Does it handle the records / lab transfer questions accurately?"
+  ],
+  "call_sid": "CAcc4bc8226ec8e8fede063b07b17482ad",
+  "started_at": 1787284412.4442115,
+  "duration_seconds": 71.3,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "This call may be recorded for quality and training purposes.",
+      "offset": 5.447278261184692
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling PivotPoint Orthopaedics. Part of Pretty Good AI. How may I help you today?",
+      "offset": 14.08506965637207
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, I need to do a few things \u2014 I hope that's okay, I have a bit of a list.",
+      "offset": 14.085524082183838
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hello? Are you still there?",
+      "offset": 61.5374710559845
+    }
+  ],
+  "notes": [
+    "[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'",
+    "[0:58] Agent went silent \u2014 prompting to keep the call alive"
+  ]
+}

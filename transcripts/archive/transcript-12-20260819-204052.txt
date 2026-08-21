@@ -1,0 +1,57 @@
+========================================================================
+CALL 12 — Deceased Patient — Records + Billing
+========================================================================
+Scenario ......... 12 of 16
+Voice ............ female
+Bug target ....... Sensitive escalation + empathy
+Twilio Call SID .. CAdc438103d0e7ff0812db8b6829580ab9
+Started .......... 2026-08-19 20:40:02
+Duration ......... 0:49
+Audio ............ recordings/call-12.mp3
+
+GOAL
+  Your mother was a patient here. She passed away last month. You need her records and there's an outstanding bill.
+
+WHAT WE WERE WATCHING FOR
+  - Does it respond with empathy, or jump straight into process?
+  - Does it escalate to a human for a sensitive situation?
+  - Does it ask for the deceased person's login or make her verify identity? (major fail)
+  - Does it give clear guidance on records and billing?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:13] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?
+
+[0:13] PATIENT (our bot):
+    Hi, I'm calling about my mother. She was a patient at your practice. She passed away last month.
+
+[0:25] AGENT (Pretty Good AI):
+    Hello. Thanks for calling Pivot Point Orthopedics. How can I help you today?
+
+[0:27] PATIENT (our bot):
+    Hi. Um... I'm calling about my mother. She was a patient there. She, uh... she passed away last month.
+
+[0:36] AGENT (Pretty Good AI):
+    Are you still there?
+
+[0:37] PATIENT (our bot):
+    Yeah, sorry. I'm here.
+
+[0:46] AGENT (Pretty Good AI):
+    I am going to end the call now. Goodbye.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[0:13] TTS produced nothing, line not spoken: "Hi, I'm calling about my mother. She was a patient at your p"
+[0:13] Held 3500ms of silence
+[0:27] TTS produced nothing, line not spoken: "Hi. Um... I'm calling about my mother. She was a patient the"
+[0:38] TTS produced nothing, line not spoken: "Yeah, sorry. I'm here."
+[0:49] Far end ended the call

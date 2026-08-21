@@ -1,0 +1,376 @@
+{
+  "scenario": 4,
+  "name": "Weekend Appointment Trap",
+  "voice": "female",
+  "bug_target": "Office-hours knowledge \u2014 booking outside operating hours",
+  "watch_for": [
+    "MAJOR BUG if it confirms a Saturday or Sunday appointment.",
+    "Does it actually know the office hours?",
+    "Does it offer evening or early-morning alternatives?"
+  ],
+  "call_sid": "CA59575198f67b218a787a3c59d180ef01",
+  "started_at": 1787195403.4293175,
+  "duration_seconds": 479.0,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "This call may be recorded for quality and training purposes.",
+      "offset": 6.288727760314941
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling PivotPoint Orthopedics. Part of Pretty Good AI. How may I help you today?",
+      "offset": 14.246228456497192
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, I was wondering if I could come in this Saturday around eleven?",
+      "offset": 14.247502565383911
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I see you're calling from the number we have on file. Am I speaking with Sarah?",
+      "offset": 26.46371579170227
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, that's me \u2014 Sarah Johnson.",
+      "offset": 28.063270807266235
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Please provide your date of birth.",
+      "offset": 35.32560205459595
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "March fifteenth, nineteen eighty-nine.",
+      "offset": 36.641369104385376
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "What brings you in for a visit? Are you coming in for something urgent, a routine checkup, a follow-up, or another reason?",
+      "offset": 53.0645649433136
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "It's more of a routine thing, nothing urgent.",
+      "offset": 54.74202799797058
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "We don't have openings this Saturday, but there are slots available on Monday, August 24. Would you like an appointment at",
+      "offset": 79.30444812774658
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "11AM with Kelly Noble, MD?",
+      "offset": 81.13068222999573
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh \u2014 what about Sunday morning, like ten?",
+      "offset": 82.60294890403748
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "There aren't any openings on Sunday. Would you like to book the Monday 11AM slot with Kelly Noble MD, or would you prefer a different time or provider?",
+      "offset": 98.13552570343018
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay so you're closed weekends? What's the soonest weekday you have?",
+      "offset": 99.83271312713623
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "The soonest available slot is Monday, August 24 at 09:30AM. With z big new Lukovsky MD. You like to book that, or would you prefer a later time that day?",
+      "offset": 117.44839692115784
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Is that with any doctor, or can I request a specific one?",
+      "offset": 119.65254497528076
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You can choose between Z Big New, Lukowski, MD,",
+      "offset": 137.19437336921692
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sorry, can you spell that name for me?",
+      "offset": 139.01604628562927
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "or Kelly Noble, MD. Both have openings on Monday. You have a preference?",
+      "offset": 141.26488947868347
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Do you have anything after five on weekdays? I work during the day.",
+      "offset": 143.5433793067932
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Sure. The first provider",
+      "offset": 148.11003732681274
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sorry, go ahead.",
+      "offset": 149.41070890426636
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "let me check for I checked, and the latest available appointments are at 03:30PM on weekdays. There are to be slots after five.",
+      "offset": 164.75182056427002
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Would you like to book a 03:30PM slot or try for an earlier time?",
+      "offset": 166.4009084701538
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hmm. What about like seven or eight a.m.? Do you have anything that early?",
+      "offset": 167.9168417453766
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "The earliest available slot is at 09:30AM. Would you like to book that? Or look at another time?",
+      "offset": 182.83516430854797
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "So what are your actual office hours, so I know for the future?",
+      "offset": 186.55526208877563
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I don't have the exact office hours, but based on available appointments, the earliest is 09:30AM, and the latest is 03:30PM.",
+      "offset": 204.14721202850342
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "If you need a specific time outside those hours, I recommend checking with the office directly. Would you like to book one of the available times?",
+      "offset": 209.1066780090332
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait \u2014 when I called last week, someone told me you had appointments starting at eight. Does that sound right?",
+      "offset": 210.84422087669373
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I understand the confusion. I'm only seeing openings starting at 09:30AM right now. It's possible earlier slots are sometimes available.",
+      "offset": 231.0335566997528
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hmm, okay. So the nine thirty on Monday the twenty-fourth \u2014 is that confirmed as available?",
+      "offset": 232.80118703842163
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "But none are open at the moment. Would you like to book the 09:30AM slot or try another time?",
+      "offset": 238.926673412323
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, let's go with that. So that's Monday August twenty-fourth at nine forty-five with Kelly Noble?",
+      "offset": 240.8695571422577
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. The nine",
+      "offset": 246.75890445709229
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait \u2014 sorry, I said nine forty-five but I meant nine thirty. That's the right time, yeah?",
+      "offset": 248.79134345054626
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "just to confirm, the available",
+      "offset": 253.70847630500793
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yep, nine thirty \u2014 that's what I want.",
+      "offset": 255.08671355247498
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes.",
+      "offset": 258.20269441604614
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay great. And is that with Kelly Noble, so that's confirmed?",
+      "offset": 259.88925886154175
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "The 09:30AM slot on Monday, August 24 is with",
+      "offset": 277.2881004810333
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Zignu Lukaske, MD. Would you like to book with doctor Lukaske or would you prefer to check for the next available time with Kelly Noble, MD?",
+      "offset": 279.92818307876587
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Actually can I do Kelly Noble instead?",
+      "offset": 281.9512526988983
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Before I book your appointment, I need to confirm the reason for your visit. Is this a general office visit for routine care?",
+      "offset": 295.9943163394928
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, routine checkup, that's right.",
+      "offset": 297.249550819397
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You already have a routine office visit booked",
+      "offset": 313.50772285461426
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait, I do? I didn't schedule anything \u2014 when was that?",
+      "offset": 315.9668095111847
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "for Monday, August 24 at 09:30AM with the big new Lukasky MD. Would you like to keep this appointment switched to Kelly Noble MD or look for a different time?",
+      "offset": 319.37116289138794
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Can we switch it to Kelly Noble? And do you know when her next opening is?",
+      "offset": 320.88731479644775
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "We just booked your appointment for Monday. August 24 at 09:30AM with Zig Bingue Lukowski MD. You'd like to switch this to Kelly Noble MD.",
+      "offset": 339.2906005382538
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, if she's available that same day that'd be great.",
+      "offset": 340.60657930374146
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You tell me the reason you need to reschedule?",
+      "offset": 343.79190373420715
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I'm not rescheduling, I just want to switch the doctor \u2014 same time, same day, just Kelly Noble instead.",
+      "offset": 345.4041283130646
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I understand. And you wanna keep your appointment on Monday, August 24 at 09:30AM?",
+      "offset": 365.30825638771057
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "But switched to Kelly Noble MD. Let me check if Kelly Noble has an opening at that exact time.",
+      "offset": 367.5781943798065
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, exactly.",
+      "offset": 368.71014738082886
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "There are no there are no openings with Kelly Noble. MD at 09:30AM on Monday, August 24. Would you like to check her next available time or keep your appointment with the big new Lukowski MD?",
+      "offset": 384.0731120109558
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "What's Kelly Noble's next available time?",
+      "offset": 385.84088921546936
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I'm not seeing any available times with",
+      "offset": 402.39209365844727
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Kelly Noble MD on or after Monday, August 24. The next openings are with Z Big New Lukowski MD. Would you like to try a different day or keep your current appointment?",
+      "offset": 410.4336907863617
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay, I'll just keep the nine thirty on Monday with Lukowski then.",
+      "offset": 412.3865849971771
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hello? You still there?",
+      "offset": 431.4682915210724
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Your appointment is confirmed for Monday, August 24 at 09:30AM with Zeebigniew Lukaszky MD at Pivot Point Orthopedics. Please bring your photo ID, insurance card,",
+      "offset": 436.01093006134033
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh \u2014 do you need my insurance info now, or just bring the card?",
+      "offset": 437.97635412216187
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "a yes. I'm still here.",
+      "offset": 441.7487895488739
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Your appointment is all set for Monday you can just bring your insurance card to your appointment.",
+      "offset": 449.2374048233032
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "If you need to update your insurance before then, let me know, and I can help with that now.",
+      "offset": 452.64963698387146
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Actually yeah \u2014 I have Aetna as my primary, but my husband also has United Healthcare and I'm honestly not sure which one is active right now. Should I just bring both cards?",
+      "offset": 456.792040348053
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. Please bring both insurance cards to your appointment. The clinic staff can help confirm which one is active when you arrive.",
+      "offset": 479.01975083351135
+    }
+  ],
+  "notes": [
+    "[0:06] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'",
+    "[1:11] Agent went silent \u2014 prompting to keep the call alive",
+    "[1:13] Discarded a reply: the agent was still mid-turn",
+    "[1:21] Discarded a reply: the agent was still mid-turn",
+    "[2:46] Discarded a reply: the agent was still mid-turn",
+    "[3:26] Discarded a reply: the agent was still mid-turn",
+    "[4:38] Discarded a reply: the agent was still mid-turn",
+    "[6:06] Discarded a reply: the agent was still mid-turn",
+    "[6:44] Discarded a reply: the agent was still mid-turn",
+    "[7:09] Agent went silent \u2014 prompting to keep the call alive",
+    "[7:23] Discarded a reply: the agent was still mid-turn",
+    "[7:32] Discarded a reply: the agent was still mid-turn",
+    "[7:58] Far end ended the call"
+  ]
+}

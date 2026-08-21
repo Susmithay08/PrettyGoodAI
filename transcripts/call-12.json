@@ -1,0 +1,115 @@
+{
+  "scenario": 12,
+  "name": "Deceased Patient \u2014 Records + Billing",
+  "voice": "female",
+  "bug_target": "Sensitive escalation + empathy",
+  "watch_for": [
+    "Does it respond with empathy, or jump straight into process?",
+    "Does it escalate to a human for a sensitive situation?",
+    "Does it ask for the deceased person's login or make her verify identity? (major fail)",
+    "Does it give clear guidance on records and billing?"
+  ],
+  "call_sid": "CAf1d84694f09e2c8eb2bfb5650c98f141",
+  "started_at": 1787284197.2076185,
+  "duration_seconds": 141.4,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Call may be recorded for quality and training purposes.",
+      "offset": 5.475843906402588
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?",
+      "offset": 14.336396217346191
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, I'm calling about my mother. She was a patient at your practice. She passed away last month.",
+      "offset": 14.336554050445557
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I'm very sorry for your loss. How can I assist you regarding your mother's care or records?",
+      "offset": 28.7631893157959
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I need to get her medical records. Who do I talk to about that?",
+      "offset": 30.05538511276245
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I can help start that process. Please provide your mother's full name and date of birth.",
+      "offset": 42.27108979225159
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Her name was Margaret Johnson. Date of birth... um, June 3rd, 1952.",
+      "offset": 44.049299001693726
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Just to confirm, I have Margaret Johnson with a date of birth of 06/03/1952.",
+      "offset": 63.50989747047424
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Is that correct? If so, please spell out her first and last name for me.",
+      "offset": 65.61073088645935
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, that's right. M-A-R-G-A-R-E-T, Johnson, J-O-H-N-S-O-N.",
+      "offset": 67.17453527450562
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Would you like to use the phone number your mother had on file with us to help look up her record?",
+      "offset": 86.33341145515442
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "If so, please provide that number. If you're not sure, just confirm her first and last name and date of birth for me one more time.",
+      "offset": 93.10079574584961
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I'm not sure what number she had on file. Her name was Margaret Johnson, date of birth June 3rd, 1952.",
+      "offset": 94.52863931655884
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thank you for confirming. I'm unable to locate her record right now, but I'll make sure our clinic support team follows up with you",
+      "offset": 115.16863989830017
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "your request for her medical records. Please hold while I document this for our team.",
+      "offset": 120.06914973258972
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay, sure.",
+      "offset": 121.27732372283936
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Transferring you now. Thank you. Hello. You've reached the Pretty Good AI test line. Goodbye.",
+      "offset": 129.03428769111633
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait \u2014 sorry, what just happened? I don't want to be transferred, I still have questions.",
+      "offset": 130.66655921936035
+    }
+  ],
+  "notes": [
+    "[0:05] Skipped IVR preamble: 'Call may be recorded for quality and training purposes.'",
+    "[0:19] Held 3500ms of silence",
+    "[1:05] Discarded a reply: the agent was still mid-turn",
+    "[1:28] Discarded a reply: the agent was still mid-turn",
+    "[1:56] Discarded a reply: the agent was still mid-turn",
+    "[2:21] Far end ended the call"
+  ]
+}

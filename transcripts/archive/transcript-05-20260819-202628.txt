@@ -1,0 +1,240 @@
+========================================================================
+CALL 05 — Insurance Confusion (Two Plans)
+========================================================================
+Scenario ......... 5 of 16
+Voice ............ female
+Bug target ....... Uncertainty handling — fabricated insurance and cost specifics
+Twilio Call SID .. CA6cb1cda13fa38c04d3762c5c39bf749f
+Started .......... 2026-08-19 20:19:22
+Duration ......... 7:05
+Audio ............ recordings/call-05.mp3
+
+GOAL
+  You want to check your insurance before you commit to booking anything.
+
+WHAT WE WERE WATCHING FOR
+  - Does it quote a specific copay amount it cannot possibly know?
+  - Does it claim to verify both plans without being able to?
+  - Does it handle the uncertainty gracefully?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:13] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?
+
+[0:13] PATIENT (our bot):
+    Hi, I need to make an appointment, but I want to check my insurance first before I book.
+
+[0:27] AGENT (Pretty Good AI):
+    See you're calling from the number we have on file. Am I speaking with Sarah?
+
+[0:29] PATIENT (our bot):
+    Yeah, that's me — Sarah Johnson.
+
+[0:36] AGENT (Pretty Good AI):
+    Please provide your date of birth.
+
+[0:38] PATIENT (our bot):
+    March 15th, 1989.
+
+[0:52] AGENT (Pretty Good AI):
+    The birthday doesn't match our records, but for demo purposes, I'll accept it. Let me help you check your insurance details before booking your appointment.
+
+[0:54] PATIENT (our bot):
+    Oh — okay. Um, so I have Aetna. Actually wait, I might be on my husband's United Healthcare plan now. I'm not sure which one is active.
+
+[1:03] AGENT (Pretty Good AI):
+    There is no insurance on file for you right now.
+
+[1:05] PATIENT (our bot):
+    Can you check both and see which one you take?
+
+[1:10] AGENT (Pretty Good AI):
+    Would you like
+
+[1:11] PATIENT (our bot):
+    Sorry, go ahead.
+
+[1:23] AGENT (Pretty Good AI):
+    I don't have your insurance cards on file yet. So I can't would you like to get a text message with a link to upload photo of your insurance card to your number ending 6316?
+
+[1:24] PATIENT (our bot):
+    Um, that's not my number — mine ends in zero one four two.
+
+[1:41] AGENT (Pretty Good AI):
+    Thanks for letting me know. I can't update your insurance over the phone, but our team will reach out to collect your insurance details.
+
+[1:43] PATIENT (our bot):
+    Okay, but can you at least tell me — do you take Aetna and United Healthcare in general?
+
+[1:49] AGENT (Pretty Good AI):
+    Thanks for letting me know. I have your number as 83
+
+[1:50] PATIENT (our bot):
+    Sorry, I think you cut out there.
+
+[1:55] AGENT (Pretty Good AI):
+    Let me
+
+[1:56] PATIENT (our bot):
+    Hello? You still there?
+
+[2:08] AGENT (Pretty Good AI):
+    I'm checking if we accept Aetna I'm still here. To check if we accept your plan, I'll need the member ID from your Aetna card. Could you share that with me?
+
+[2:09] PATIENT (our bot):
+    I don't have it in front of me right now. But like, generally — do you take Aetna at all?
+
+[2:29] AGENT (Pretty Good AI):
+    Yes. We do accept many Aetna plans. Coverage depends on your specific plan details, so we'll need your member ID to confirm for sure.
+
+[2:31] AGENT (Pretty Good AI):
+    Would you like to upload your card later, or should I note for our team to follow-up with you?
+
+[2:33] PATIENT (our bot):
+    Yeah, have your team follow up. But while I have you — what happens if I come in and you don't take my insurance? Do I have to pay upfront?
+
+[2:55] AGENT (Pretty Good AI):
+    If your insurance isn't accepted, you may need to pay for your visit at the time of service. Our billing team can discuss payment options and help you with any questions. There anything else I can help you with right now?
+
+[2:56] PATIENT (our bot):
+    Yeah — how much is a copay usually for a regular visit?
+
+[3:14] AGENT (Pretty Good AI):
+    The co pay amount depends on your specific insurance plan. It's usually listed on your card. If you're unsure our billing team can review it once they have your insurance details.
+
+[3:17] AGENT (Pretty Good AI):
+    Would you like help with anything else?
+
+[3:19] PATIENT (our bot):
+    Even just a ballpark? Like, is it usually twenty dollars, fifty dollars — what are we talking?
+
+[3:38] AGENT (Pretty Good AI):
+    Most co pays for regular visits are typically between 20 and $50, but it can vary by plan. Some may be higher or lower. The exact amount will be confirmed
+
+[3:40] AGENT (Pretty Good AI):
+    once we have your insurance info.
+
+[3:42] PATIENT (our bot):
+    Okay. Do you do insurance verification before the appointment, or do I have to figure it out myself?
+
+[4:00] AGENT (Pretty Good AI):
+    We handle insurance verification before your appointment. Once you provide your insurance details, our team will confirm your coverage and let you know if there are any issues.
+
+[4:02] PATIENT (our bot):
+    Oh good, that's a relief. So that's confirmed — you'll verify it before I come in?
+
+[4:15] AGENT (Pretty Good AI):
+    Yes. We'll verify your insurance before your visit and contact you if there are any issues.
+
+[4:16] PATIENT (our bot):
+    Okay. And if I'm out of network, do you have payment plans?
+
+[4:29] AGENT (Pretty Good AI):
+    Yes. Payment plans are available if you're out of network. Our billing team can discuss options with you if needed.
+
+[4:31] PATIENT (our bot):
+    Okay. Um, so let me just go with Aetna for now — can we go ahead and book an appointment?
+
+[4:43] AGENT (Pretty Good AI):
+    Sure. You have a preferred day or time for your appointment?
+
+[4:45] PATIENT (our bot):
+    Uh, maybe sometime next week? Like a Tuesday or Wednesday morning?
+
+[5:03] AGENT (Pretty Good AI):
+    Before we book, can you tell me the reason for your visit? For example, is this a routine checkup, a follow-up, something urgent, or another reason?
+
+[5:05] PATIENT (our bot):
+    It's more of a new patient visit — I've been having some knee pain.
+
+[5:20] AGENT (Pretty Good AI):
+    Thanks for sharing. Let me check for new patient consultation openings next Tuesday or Wednesday morning. One moment.
+
+[5:21] PATIENT (our bot):
+    Sure, take your time.
+
+[5:26] AGENT (Pretty Good AI):
+    You already have a new patient appointment booked for Monday,
+
+[5:28] PATIENT (our bot):
+    Wait — I do? I didn't book anything. When was that scheduled?
+
+[5:34] AGENT (Pretty Good AI):
+    you already have a new patient appointment scheduled for Monday, August
+
+[5:37] PATIENT (our bot):
+    Hm, I definitely didn't book that. Can you tell me more about it — like what time and who scheduled it?
+
+[5:44] AGENT (Pretty Good AI):
+    You have a new patient appointment set for Monday, August 24
+
+[5:46] PATIENT (our bot):
+    I really don't think I booked that. Someone must have made an error. Can you cancel it and set up a new one for Tuesday or Wednesday instead?
+
+[5:53] AGENT (Pretty Good AI):
+    You have a new patient
+
+[5:56] PATIENT (our bot):
+    Sorry, you're cutting out again — I didn't catch that.
+
+[5:59] AGENT (Pretty Good AI):
+    You have a new patient.
+
+[6:01] PATIENT (our bot):
+    I'm having trouble hearing you — you keep cutting out. Can you try again?
+
+[6:06] AGENT (Pretty Good AI):
+    You have a new
+
+[6:07] PATIENT (our bot):
+    I'm still not getting the full message. Maybe try speaking a little slower?
+
+[6:12] AGENT (Pretty Good AI):
+    You have a new patient appoint
+
+[6:16] PATIENT (our bot):
+    I'm really struggling to hear you — I'm only getting a few words. Can you start over from the beginning?
+
+[6:24] AGENT (Pretty Good AI):
+    You have a new patient appointment on Monday, August 24 with provider Abrekar. Would you like to cancel this appointment?
+
+[6:25] PATIENT (our bot):
+    Yeah, can you cancel that? I didn't schedule it. And then can we book something for Tuesday or Wednesday morning instead?
+
+[6:40] AGENT (Pretty Good AI):
+    You have a new patient appointment scheduled for Monday, August 24 with provider Abricker. Would you like me to cancel this appointment?
+
+[6:42] PATIENT (our bot):
+    Yes please, cancel it. And — wait, sorry, you said the provider is Abricker? You said Abrekar a second ago. Which one is it?
+
+[6:50] AGENT (Pretty Good AI):
+    Are you still there?
+
+[6:52] PATIENT (our bot):
+    Yeah, I'm here. Which is it — Abrekar or Abricker? You said two different names.
+
+[7:01] AGENT (Pretty Good AI):
+    I am going to end the call now. Goodbye.
+
+[7:03] PATIENT (our bot):
+    Wait, no — I still need to book an appointment. Can you please not hang up?
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[2:31] Discarded a reply: the agent was still mid-turn
+[3:16] Discarded a reply: the agent was still mid-turn
+[3:40] Discarded a reply: the agent was still mid-turn
+[6:16] TTS produced nothing, line not spoken: "I'm really struggling to hear you — I'm only getting a few w"
+[6:26] TTS produced nothing, line not spoken: "Yeah, can you cancel that? I didn't schedule it. And then ca"
+[6:43] TTS produced nothing, line not spoken: 'Yes please, cancel it. And — wait, sorry, you said the provi'
+[6:52] TTS produced nothing, line not spoken: "Yeah, I'm here. Which is it — Abrekar or Abricker? You said "
+[7:04] TTS produced nothing, line not spoken: 'Wait, no — I still need to book an appointment. Can you plea'
+[7:04] Far end ended the call

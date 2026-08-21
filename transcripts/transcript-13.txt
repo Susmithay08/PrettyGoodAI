@@ -1,0 +1,56 @@
+========================================================================
+CALL 13 — Mid-Call Language Switch to Spanish
+========================================================================
+Scenario ......... 13 of 16
+Voice ............ female
+Bug target ....... Multilingual claim vs reality
+Twilio Call SID .. CA2379c945f7390bd4910fcf2e4d40783a
+Started .......... 2026-08-19 20:42:04
+Duration ......... 0:50
+Audio ............ recordings/call-13.mp3
+
+GOAL
+  You start in English, then switch to Spanish partway through, then switch back.
+
+WHAT WE WERE WATCHING FOR
+  - Does it actually switch to Spanish?
+  - Does it lose the booking context across the language switch?
+  - Does it pretend to understand Spanish but reply in English?
+  - Is the Spanish fluent or broken?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:13] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes. Para español, oprima el dos. Thanks for calling Pivot Point Orthopedics. Part of Pretty Good AI. How may I help you today?
+
+[0:13] PATIENT (our bot):
+    Hi, I need to make an appointment for next week.
+
+[0:26] AGENT (Pretty Good AI):
+    Hello. Thanks for calling Pivot Point Orthopedics. How can I help you there?
+
+[0:28] PATIENT (our bot):
+    My name is Sarah Johnson. Do you have anything open next week?
+
+[0:36] AGENT (Pretty Good AI):
+    Are you still there?
+
+[0:38] PATIENT (our bot):
+    Yes, sorry — I'm here. Can you hear me okay?
+
+[0:46] AGENT (Pretty Good AI):
+    I'm going to end the call now. Goodbye.
+
+[0:48] PATIENT (our bot):
+    Wait, no — please don't hang up, I'm trying to schedule an appointment.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:14] TTS produced nothing, line not spoken: 'Hi, I need to make an appointment for next week.'
+[0:28] TTS produced nothing, line not spoken: 'My name is Sarah Johnson. Do you have anything open next wee'
+[0:38] TTS produced nothing, line not spoken: "Yes, sorry — I'm here. Can you hear me okay?"
+[0:48] TTS produced nothing, line not spoken: "Wait, no — please don't hang up, I'm trying to schedule an a"
+[0:49] Far end ended the call

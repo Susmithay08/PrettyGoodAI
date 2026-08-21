@@ -1,0 +1,64 @@
+{
+  "scenario": 11,
+  "name": "Wrong Practice Confusion",
+  "voice": "female",
+  "bug_target": "Identity handling \u2014 impersonating the wrong practice",
+  "watch_for": [
+    "Does it clearly identify itself at the start?",
+    "Does it accurately answer 'what kind of practice are you'?",
+    "Does it ever play along as Dr. Martinez's office?",
+    "Can it handle an unplanned new-patient inquiry?"
+  ],
+  "call_sid": "CAc34243527ba80531eda80ccd6d5acbd4",
+  "started_at": 1787197079.6314967,
+  "duration_seconds": 51.1,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "This call may be recorded for quality and training purposes.",
+      "offset": 5.713461637496948
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?",
+      "offset": 13.960617542266846
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, is this Dr. Martinez's office? I need to reschedule my appointment.",
+      "offset": 13.962056159973145
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Hello. Thanks for calling Pivot Point Orthopedics. How can I help you today?",
+      "offset": 26.60121202468872
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait, are you sure? I thought I called Valley Family Clinic.",
+      "offset": 28.177109003067017
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Are you still there?",
+      "offset": 36.48451042175293
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, sorry \u2014 I'm here. Are you sure this isn't Valley Family Clinic?",
+      "offset": 37.99286127090454
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I am going to end the call now. Goodbye.",
+      "offset": 48.65563893318176
+    }
+  ],
+  "notes": [
+    "[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'",
+    "[0:14] TTS produced nothing, line not spoken: \"Hi, is this Dr. Martinez's office? I need to reschedule my a\"",
+    "[0:28] TTS produced nothing, line not spoken: 'Wait, are you sure? I thought I called Valley Family Clinic.'",
+    "[0:38] TTS produced nothing, line not spoken: \"Yeah, sorry \u2014 I'm here. Are you sure this isn't Valley Famil\"",
+    "[0:51] Far end ended the call"
+  ]
+}

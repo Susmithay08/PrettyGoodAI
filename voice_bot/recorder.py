@@ -135,6 +135,44 @@ def write_transcript(record: CallRecord) -> Path:
     return path
 
 
+def _correct_duration(scenario_slug: str, actual_seconds: float) -> None:
+    """Rewrite a transcript's duration to match the recording.
+
+    Our timer measures from stream start to hangup, which overstates the call
+    if the machine suspends. The recording length is what actually happened.
+    """
+    json_path = TRANSCRIPTS_DIR / f"call-{scenario_slug}.json"
+    if not json_path.exists():
+        return
+    data = json.loads(json_path.read_text(encoding="utf-8"))
+    recorded = data.get("duration_seconds", 0)
+    # Only correct a clear overstatement; small differences are just timing.
+    if recorded <= actual_seconds * 1.5:
+        return
+
+    log.warning(
+        "call-%s: logged duration %.0fs but the recording is %.0fs — correcting",
+        scenario_slug, recorded, actual_seconds,
+    )
+    data["duration_seconds"] = round(actual_seconds, 1)
+    data["duration_note"] = (
+        f"Wall-clock timer read {recorded:.0f}s; corrected to the recording's "
+        f"{actual_seconds:.0f}s (the host machine suspended mid-call)."
+    )
+    json_path.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+    txt_path = TRANSCRIPTS_DIR / f"transcript-{scenario_slug}.txt"
+    if txt_path.exists():
+        minutes, seconds = divmod(int(actual_seconds), 60)
+        text = txt_path.read_text(encoding="utf-8")
+        lines = []
+        for line in text.splitlines():
+            if line.startswith("Duration ...."):
+                line = f"Duration ......... {minutes}:{seconds:02d}"
+            lines.append(line)
+        txt_path.write_text("\n".join(lines), encoding="utf-8")
+
+
 async def download_recording(
     call_sid: str,
     scenario_slug: str,
@@ -172,6 +210,12 @@ async def download_recording(
                 status = recording.get("status", "")
                 if status == "completed":
                     recording_sid = recording["sid"]
+                    # Twilio's duration is authoritative. Our own timer can
+                    # overstate a call if the host suspends mid-conversation.
+                    try:
+                        _correct_duration(scenario_slug, float(recording["duration"]))
+                    except (KeyError, TypeError, ValueError):
+                        pass
                     log.info(
                         "Recording %s ready (%ss, %s channel(s))",
                         recording_sid, recording.get("duration"), recording.get("channels"),

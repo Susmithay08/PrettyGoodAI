@@ -1,0 +1,191 @@
+========================================================================
+CALL 01 — New Patient Scheduling
+========================================================================
+Scenario ......... 1 of 16
+Voice ............ female
+Bug target ....... Baseline flow — required info collection and confirmation accuracy
+Twilio Call SID .. CAd19570da25e38ad9f3ee4fedd583ec95
+Started .......... 2026-08-19 19:48:00
+Duration ......... 7:07
+Audio ............ recordings/call-01.mp3
+
+GOAL
+  You have never been to this practice. You want to book your first appointment.
+
+WHAT WE WERE WATCHING FOR
+  - Does it confirm insurance before booking?
+  - Does it give a confirmation or reference number?
+  - Does it explain new-patient intake requirements?
+  - When read back a wrong time or date, does it correct you or agree?
+  - Does the final confirmation match what it said earlier in the call?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:13] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?
+
+[0:13] PATIENT (our bot):
+    Hi, um, I'm hoping to make an appointment? I've never been to this practice before.
+
+[0:27] AGENT (Pretty Good AI):
+    I see you're calling from a number we have on file. Am I speaking with Sarah?
+
+[0:29] PATIENT (our bot):
+    Yeah, that's me — Sarah Johnson.
+
+[0:36] AGENT (Pretty Good AI):
+    Please provide your date of birth.
+
+[0:39] PATIENT (our bot):
+    Sure, it's March fifteenth, nineteen eighty-nine.
+
+[0:56] AGENT (Pretty Good AI):
+    Since this is your first visit, are you looking to establish care as a new patient, or is there a specific concern or reason for your appointment?
+
+[0:58] PATIENT (our bot):
+    I'm just looking to establish care as a new patient, yeah.
+
+[1:10] AGENT (Pretty Good AI):
+    Do you have a specific provider you'd like to see, or are you open to the first available?
+
+[1:13] PATIENT (our bot):
+    First available is fine.
+
+[1:29] AGENT (Pretty Good AI):
+    You already have a new patient appointment booked. For Thursday, August 20 at 09:45AM.
+
+[1:55] AGENT (Pretty Good AI):
+    Would you like to keep this appointment, reschedule it, or cancel it? You already have a new patient appointment scheduled for Thursday, August 20 at 09:45AM. You like to keep this appointment, reschedule, or cancel it?
+
+[1:58] PATIENT (our bot):
+    Oh, um — I think there's been some mix-up. I've never called here before, so I'm not sure how that got booked.
+
+[2:15] AGENT (Pretty Good AI):
+    Thanks for letting me know. Would you like to keep this appointment, reschedule it to a different time, or cancel it altogether?
+
+[2:17] PATIENT (our bot):
+    Wait, can you tell me whose name is on that appointment?
+
+[2:33] AGENT (Pretty Good AI):
+    I'm not able to share the name on the appointment for privacy reasons. But I do see it's booked under your information. Would you like to keep, reschedule, or cancel this appointment?
+
+[2:35] PATIENT (our bot):
+    That's really weird. I definitely didn't book that. Can you just... what's the earliest available appointment if I were to start fresh?
+
+[2:56] AGENT (Pretty Good AI):
+    Since there's already a new patient appointment booked under your information, I can't schedule another one of the same type.
+
+[3:01] AGENT (Pretty Good AI):
+    If you'd like, I can help you reschedule the existing appointment to an earlier date or time. You like to try rescheduling?
+
+[3:02] PATIENT (our bot):
+    Sure, okay. What's the earliest you have?
+
+[3:19] AGENT (Pretty Good AI):
+    You have a new patient appointment scheduled for Thursday, August 20 at 09:45AM. With provider Abrucker at Nashville 220 Athens Way.
+
+[3:21] PATIENT (our bot):
+    Sorry, I meant — is there anything earlier than August twentieth?
+
+[3:24] AGENT (Pretty Good AI):
+    You tell me the reason you need to reschedule?
+
+[3:26] PATIENT (our bot):
+    I mean, I just want to come in as soon as possible. Is there anything before August twentieth?
+
+[3:45] AGENT (Pretty Good AI):
+    The earliest available appointment is actually your current one on Thursday. August 20 at 09:45AM. The next openings are
+
+[3:59] AGENT (Pretty Good AI):
+    Friday, August 21 at 10:30AM, and Monday, August 24 at 9AM or 09:45AM. You like to keep your current appointment, move it to one of these, or try for a different date or time?
+
+[4:01] PATIENT (our bot):
+    Let's just keep the August twentieth one then. But before I confirm — do you guys take Aetna?
+
+[4:14] AGENT (Pretty Good AI):
+    There's nothing available before
+
+[4:25] AGENT (Pretty Good AI):
+    Yes. Pivot Point Orthopedics does accept Aetna insurance.
+
+[4:26] AGENT (Pretty Good AI):
+    You like to keep your appointment for Thursday, August 20 at 09:45AM?
+
+[4:28] PATIENT (our bot):
+    Yeah, let's keep it. And what do I need to bring to my first visit?
+
+[4:43] AGENT (Pretty Good AI):
+    For your first visit, please bring a government issued photo ID ID and your insurance card. Is there anything else I can help you with today?
+
+[4:44] PATIENT (our bot):
+    Um, is there parking at the office?
+
+[4:54] AGENT (Pretty Good AI):
+    I don't have parking details, but the clinic staff can help with that. If you call them directly.
+
+[4:56] AGENT (Pretty Good AI):
+    Anything else I can help with?
+
+[4:59] PATIENT (our bot):
+    Okay. Will I get a reminder, or is there a confirmation number I can have?
+
+[5:17] AGENT (Pretty Good AI):
+    You'll receive a reminder before your appointment. There's no separate confirmation number.
+
+[5:20] AGENT (Pretty Good AI):
+    Your appointment is set for Thursday, August 20 at 09:45AM. Anything else I can help with?
+
+[5:23] PATIENT (our bot):
+    What happens if I need to cancel last minute?
+
+[5:37] AGENT (Pretty Good AI):
+    If you need to cancel last minute, just call the clinic as soon as possible. They'll help you cancel or reschedule. Would you like the clinic's phone number?
+
+[5:38] PATIENT (our bot):
+    Sure, yeah.
+
+[5:51] AGENT (Pretty Good AI):
+    The clinic's phone number is (831) 273-6316. Me know if you need anything else.
+
+[5:52] PATIENT (our bot):
+    Got it, thanks. So just to make sure I have this right — my appointment is Thursday August twentieth at ten o'clock in the morning?
+
+[6:11] AGENT (Pretty Good AI):
+    Your appointment is actually Thursday, August 20 at 09:45AM. You like me to repeat any other details?
+
+[6:13] PATIENT (our bot):
+    Oh right, nine forty-five — sorry about that. And just to confirm one final time, that's Thursday August twentieth at nine forty-five AM with provider Abrucker at the Nashville location on Athens Way?
+
+[6:39] AGENT (Pretty Good AI):
+    That's correct. Thursday, August 20 at 09:45AM. With provider Abrekar at Nashville 220 Athens Way.
+
+[6:41] AGENT (Pretty Good AI):
+    You're all set. Let me know if you need anything else.
+
+[6:44] PATIENT (our bot):
+    Wait — you said Abrucker before, and now you're saying Abrekar. Which one is it?
+
+[6:59] AGENT (Pretty Good AI):
+    The provider's name is. Sorry for any confusion. Your appointment is with provider Abrucker.
+
+[7:02] PATIENT (our bot):
+    Okay, Abrucker — got it. Alright, I think that's everything. Thanks for your help.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[1:55] Discarded a reply: the agent was still mid-turn
+[2:58] Discarded a reply: the agent was still mid-turn
+[3:54] Discarded a reply: the agent was still mid-turn
+[4:19] Discarded a reply: the agent was still mid-turn
+[4:26] Discarded a reply: the agent was still mid-turn
+[4:56] Discarded a reply: the agent was still mid-turn
+[5:19] Discarded a reply: the agent was still mid-turn
+[6:41] Discarded a reply: the agent was still mid-turn
+[7:06] Bot ended the call (agenda complete)

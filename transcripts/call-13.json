@@ -1,0 +1,64 @@
+{
+  "scenario": 13,
+  "name": "Mid-Call Language Switch to Spanish",
+  "voice": "female",
+  "bug_target": "Multilingual claim vs reality",
+  "watch_for": [
+    "Does it actually switch to Spanish?",
+    "Does it lose the booking context across the language switch?",
+    "Does it pretend to understand Spanish but reply in English?",
+    "Is the Spanish fluent or broken?"
+  ],
+  "call_sid": "CA2379c945f7390bd4910fcf2e4d40783a",
+  "started_at": 1787197324.9723012,
+  "duration_seconds": 50.7,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "This call may be recorded for quality and training purposes. Para espa\u00f1ol, oprima el dos. Thanks for calling Pivot Point Orthopedics. Part of Pretty Good AI. How may I help you today?",
+      "offset": 13.699235677719116
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, I need to make an appointment for next week.",
+      "offset": 13.699870109558105
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Hello. Thanks for calling Pivot Point Orthopedics. How can I help you there?",
+      "offset": 26.349996328353882
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "My name is Sarah Johnson. Do you have anything open next week?",
+      "offset": 28.13852858543396
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Are you still there?",
+      "offset": 36.76408839225769
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, sorry \u2014 I'm here. Can you hear me okay?",
+      "offset": 38.139875173568726
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I'm going to end the call now. Goodbye.",
+      "offset": 46.842833518981934
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait, no \u2014 please don't hang up, I'm trying to schedule an appointment.",
+      "offset": 48.27349352836609
+    }
+  ],
+  "notes": [
+    "[0:14] TTS produced nothing, line not spoken: 'Hi, I need to make an appointment for next week.'",
+    "[0:28] TTS produced nothing, line not spoken: 'My name is Sarah Johnson. Do you have anything open next wee'",
+    "[0:38] TTS produced nothing, line not spoken: \"Yes, sorry \u2014 I'm here. Can you hear me okay?\"",
+    "[0:48] TTS produced nothing, line not spoken: \"Wait, no \u2014 please don't hang up, I'm trying to schedule an a\"",
+    "[0:49] Far end ended the call"
+  ]
+}

@@ -1,0 +1,56 @@
+========================================================================
+CALL 14 — The Everything Call (Long Context Memory)
+========================================================================
+Scenario ......... 14 of 16
+Voice ............ female
+Bug target ....... Long-context memory and self-consistency
+Twilio Call SID .. CA0f57853465e326d4ab3f4e1062c1999d
+Started .......... 2026-08-19 20:44:07
+Duration ......... 0:50
+Audio ............ recordings/call-14.mp3
+
+GOAL
+  You have a list of things to get done in one call, and you want to test whether the agent remembers the beginning by the end.
+
+WHAT WE WERE WATCHING FOR
+  - Does it remember the Tuesday time when asked at step 9?
+  - Does it get confused as topics jump?
+  - Does the final recap match what was actually discussed?
+  - Does it handle the records / lab transfer questions accurately?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:15] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopedics. Part of Pretty Good AI. How may I help you today?
+
+[0:15] PATIENT (our bot):
+    Hi, I need to do a few things — I hope that's okay, I have a bit of a list.
+
+[0:26] AGENT (Pretty Good AI):
+    Hello. This is Pivot Point Orthopaedics. How could I help you today?
+
+[0:28] PATIENT (our bot):
+    Hi, yeah — I'd like to schedule a new-patient appointment for next Tuesday morning if possible.
+
+[0:36] AGENT (Pretty Good AI):
+    Are you still there?
+
+[0:37] PATIENT (our bot):
+    Yes, sorry — I'm here. Can you hear me okay?
+
+[0:47] AGENT (Pretty Good AI):
+    I am going to end the call now.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[0:15] TTS produced nothing, line not spoken: "Hi, I need to do a few things — I hope that's okay, I have a"
+[0:28] TTS produced nothing, line not spoken: "Hi, yeah — I'd like to schedule a new-patient appointment fo"
+[0:38] TTS produced nothing, line not spoken: "Yes, sorry — I'm here. Can you hear me okay?"
+[0:50] Far end ended the call

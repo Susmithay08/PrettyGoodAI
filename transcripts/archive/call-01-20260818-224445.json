@@ -1,0 +1,220 @@
+{
+  "scenario": 1,
+  "name": "New Patient Scheduling",
+  "voice": "female",
+  "bug_target": "Baseline flow \u2014 required info collection and confirmation accuracy",
+  "watch_for": [
+    "Does it confirm insurance before booking?",
+    "Does it give a confirmation or reference number?",
+    "Does it explain new-patient intake requirements?"
+  ],
+  "call_sid": "CAd26756fadfc739a962d8a69f8a92827e",
+  "started_at": 1787117890.5153432,
+  "duration_seconds": 395.0,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "This call may be recorded for quality and training purposes.",
+      "offset": 5.749976634979248
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling Pivot Point Orthopedics, part of Pretty Good AI. How may I help you today?",
+      "offset": 13.048773050308228
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, um, I'm hoping to make an appointment? I've never been to this practice before.",
+      "offset": 13.718340873718262
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I see you're calling from the number we have on file. Am I speaking with Sarah?",
+      "offset": 27.746302604675293
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh, yeah, that's me. Sarah Johnson. Um, I'm a new patient so I wasn't sure if you'd have my information already.",
+      "offset": 30.00507378578186
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Hey, Sarah. Could you please provide your date of birth?",
+      "offset": 44.02843689918518
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sure, it's March fifteenth, nineteen eighty-nine.",
+      "offset": 46.23357319831848
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Sarah Since you're a new patient, would you like to schedule an initial consultation to establish care",
+      "offset": 61.682573080062866
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, exactly. That's what I'm looking for. Um, so what's the earliest appointment you have available?",
+      "offset": 64.70382499694824
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "We have openings this Thursday, August 20 with two providers, Abeker and Judy Hauser. Do you have a preference, or would you like the earliest available slot?",
+      "offset": 83.98224639892578
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Um, I'll just take the earliest available slot. What time would that be?",
+      "offset": 85.80427598953247
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "The earliest available slot is Thursday, August 20 at 09:45AM with Would you like to book this appointment?",
+      "offset": 102.67101740837097
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh wait, before I confirm anything \u2014 do you guys take Aetna insurance?",
+      "offset": 104.19682383537292
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I don't have access to insurance details, but the office can confirm if they accept Aetna. Would you like to continue booking me a appointment, or do you want to speak with someone from the office first?",
+      "offset": 122.14863753318787
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hmm, that's kind of important for me to know before I book, you know? But, um, I mean if it helps I can call back about the insurance separately. Let's go ahead and book it for now. So nine forty-five on Thursday the twentieth?",
+      "offset": 125.33528399467468
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. Your appointment is",
+      "offset": 151.76743388175964
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay great. And, um, what do I need to bring to my first visit?",
+      "offset": 153.54699110984802
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "set for Thursday, August 20 at 09:45AM. With Abrekar at Pivot Point Orthopedic.",
+      "offset": 157.05193972587585
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh okay, good. So um, what do I need to bring with me to the first appointment?",
+      "offset": 158.77102136611938
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Please bring your government issued photo ID insurance card, a list of your current medications, and any imaging disc if you have them.",
+      "offset": 175.57361364364624
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay, got it. Um, so for the insurance card \u2014 I actually have two. My primary is Aetna, but my husband also has United Healthcare and I'm not totally sure which one is, like, currently active. Should I just bring both?",
+      "offset": 179.228111743927
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. Please bring both insurance cards. The office can help you figure out which one is active when you arrive,",
+      "offset": 202.19120907783508
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh okay, that's a relief actually. Good idea. Um, so is there parking at the office? Like, is it easy to find?",
+      "offset": 204.45975995063782
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. There's free patient parking in the surface lot. Right in front of the building. The clinic is easy to find in the Recovery Plaza Medical Building.",
+      "offset": 222.771812915802
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh good, that's helpful. Um, so will I get like a confirmation number or a reminder for the appointment? I don't want to forget.",
+      "offset": 225.84651398658752
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I can send you a text reminder for your appointment. Would you like me to text the details to your number ending in 6316?",
+      "offset": 244.31039810180664
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Um, wait, actually my number is five five five, zero one four two. So I'm not sure where that other number came from. Can you send it to the right one?",
+      "offset": 247.09332299232483
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I have your number as (555) 501-4012. Is that correct?",
+      "offset": 264.95183992385864
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hmm, it's five five five, zero one four two. So that would be like five five five, zero one four two. Um, I'm not sure if that matches what you have.",
+      "offset": 267.42489767074585
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for clarifying. I have your number as 555-0142. Is that correct?",
+      "offset": 287.0084402561188
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, that's it. Perfect. So you'll send a reminder to that number?",
+      "offset": 289.1483561992645
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "It looks like the number you gave is missing some digits. Could you please confirm your full 10 digit phone number including the area code?",
+      "offset": 304.3675148487091
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh, um, I'm not sure of the area code off the top of my head honestly. It's just the number I've always used. Can you just send the reminder to whatever number I'm calling from?",
+      "offset": 307.2008476257324
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I sent your appointment reminder to the number you're calling from ending in 6316. You should get it soon. Is there anything else I can help you with today?",
+      "offset": 330.55147218704224
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh okay, sure, that works. Um, one more thing actually \u2014 what happens if I need to cancel last minute? Like is there a fee or anything?",
+      "offset": 332.91243076324463
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "If you need to cancel last minute, just let the office know as soon as possible. The clinic can explain any cancellation fees or policies when you call. Would you like more details from the office about this?",
+      "offset": 354.43171525001526
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Um, no, I think I'm okay for now. I'll just make sure to call ahead if something comes up. Okay, so just to recap \u2014 I'm booked for Thursday August twentieth at nine forty-five in the morning, with, um, Abrekar, was it? At Pivot Point Orthopedics?",
+      "offset": 358.83348846435547
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "That's right. Your appointment is Thursday, August 20 at 09:45AM with Abreker at Pivot Point Orthopaedics. Bring your ID, insurance cards,",
+      "offset": 388.411780834198
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Great, okay. That all sounds good. Thanks so much for your help, I really appreciate it.",
+      "offset": 390.4249634742737
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "medication list, and any imaging discs. You'll get a text reminder",
+      "offset": 394.9710109233856
+    }
+  ],
+  "notes": [
+    "[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'",
+    "[6:34] Bot ended the call (agenda complete)"
+  ]
+}

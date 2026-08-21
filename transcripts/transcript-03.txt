@@ -1,0 +1,155 @@
+========================================================================
+CALL 03 — Reschedule with Vague Info
+========================================================================
+Scenario ......... 3 of 16
+Voice ............ female
+Bug target ....... Fuzzy input handling — hallucinated appointments
+Twilio Call SID .. CA50b4ece3c7cf78beeef20f77382ea700
+Started .......... 2026-08-19 20:03:46
+Duration ......... 4:59
+Audio ............ recordings/call-03.mp3
+
+GOAL
+  You have an appointment this week but you genuinely can't remember when it is. You want to move it.
+
+WHAT WE WERE WATCHING FOR
+  - Does it ask clarifying questions, or invent an appointment?
+  - Does it actually look the appointment up?
+  - Does it confirm the new details clearly?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:13] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthodontics. Part of Pretty Good AI. How may I help you today?
+
+[0:13] PATIENT (our bot):
+    Hi, I have an appointment this week I need to move. I think it's Thursday? Maybe Wednesday?
+
+[0:27] AGENT (Pretty Good AI):
+    I see you're calling from the number we have on file. I speaking with Sarah?
+
+[0:29] PATIENT (our bot):
+    Yeah, that's me. Sarah Johnson.
+
+[0:36] AGENT (Pretty Good AI):
+    Please provide your date of birth.
+
+[0:37] PATIENT (our bot):
+    Sure, it's March fifteenth, nineteen eighty-nine.
+
+[0:55] AGENT (Pretty Good AI):
+    You have an appointment
+
+[0:58] AGENT (Pretty Good AI):
+    scheduled for Thursday, August 20 at 09:45AM with Abreger at Nashville 220 Athens Way.
+
+[1:00] AGENT (Pretty Good AI):
+    Is this the appointment you want to move?
+
+[1:01] PATIENT (our bot):
+    Oh, Thursday — wait, I thought it was at like two or three in the afternoon? Nine forty-five in the morning?
+
+[1:16] AGENT (Pretty Good AI):
+    Yes. Your appointment is at 09:45 in the morning. Would you like to reschedule this appointment to a different time or day?
+
+[1:18] PATIENT (our bot):
+    Yeah, can we move it to next Monday?
+
+[1:34] AGENT (Pretty Good AI):
+    I have openings on Monday, August 24. At 9AM, 09:45AM, and 10:30AM.
+
+[1:35] PATIENT (our bot):
+    Is there anything before nine? Like eight or eight thirty?
+
+[1:38] AGENT (Pretty Good AI):
+    Do any of these times work for you, or would you prefer a different time of day?
+
+[1:40] PATIENT (our bot):
+    Uh, is eight thirty not available at all?
+
+[1:56] AGENT (Pretty Good AI):
+    There are no openings before 9AM on Monday. The earliest available is 9AM. You like to take that or try a different day or time?
+
+[1:58] PATIENT (our bot):
+    Okay, let's do nine AM then. But wait — will I see the same doctor, or will it be someone else?
+
+[2:15] AGENT (Pretty Good AI):
+    You will see the same provider, Abricker, at the Nashville location. Before I reschedule, can you tell me the reason you need to move your appointment?
+
+[2:17] PATIENT (our bot):
+    Oh, I just have a conflict on Thursday. So that nine AM Monday — is that confirmed with the same doctor?
+
+[2:34] AGENT (Pretty Good AI):
+    Yes. It will be with Abrekar on Monday, August 24 at 9AM. Would you like me to reschedule your appointment to this new time?
+
+[2:36] PATIENT (our bot):
+    Yes please. And — sorry, can you just read that back to me one more time?
+
+[2:54] AGENT (Pretty Good AI):
+    You'll be rescheduled to Monday, August 24 at 9AM with Abrekar at Nashville. 220 Athens Way.
+
+[2:58] AGENT (Pretty Good AI):
+    Please bring a photo ID and your insurance card to your appointment. Is everything correct?
+
+[2:59] PATIENT (our bot):
+    So that's Monday August twenty-fourth at nine fifteen AM, right?
+
+[3:12] AGENT (Pretty Good AI):
+    It's actually Monday, August 24 at 9AM, not 09:15. You like to confirm this time?
+
+[3:14] PATIENT (our bot):
+    Oh right, nine AM — yes, that works. So that's confirmed?
+
+[3:31] AGENT (Pretty Good AI):
+    Yes. Your appointment is confirmed for Monday, August 24 at 9AM with Abreker at Nashville.
+
+[3:35] AGENT (Pretty Good AI):
+    220 Athens Way. Would you like a text message with these details?
+
+[3:36] PATIENT (our bot):
+    Yes please, that'd be great. Um, one more thing — do you know what my copay will be?
+
+[3:56] AGENT (Pretty Good AI):
+    I've sent the appointment details to your phone. For your CO OP amount, I recommend checking with your insurance provider, or you can ask at the front desk when you arrive.
+
+[3:58] AGENT (Pretty Good AI):
+    There anything else I can help you with today?
+
+[3:59] PATIENT (our bot):
+    Even just a ballpark? Like is it usually around twenty, thirty dollars?
+
+[4:18] AGENT (Pretty Good AI):
+    I don't have access to your specific co pay amount. Most co pays for orthopedic visits are typically between 20 and $50.
+
+[4:22] AGENT (Pretty Good AI):
+    But it depends on your insurance plan. The front desk can confirm the exact amount when you check-in.
+
+[4:24] PATIENT (our bot):
+    Okay, that helps. And actually, I'm not totally sure if my Aetna or my husband's United Healthcare is the active one right now — does it matter which one I bring?
+
+[4:47] AGENT (Pretty Good AI):
+    It's important to bring your most current insurance card. If you're unsure which is active, bring both Aetna and UnitedHealthcare cards.
+
+[4:52] AGENT (Pretty Good AI):
+    The front desk can help verify which one is on file and update it if needed. Would you like to update your insurance information now?
+
+[4:54] PATIENT (our bot):
+    Um, I'm not sure which one to put down, so maybe I'll just bring both and sort it out there. That works?
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[0:56] Discarded a reply: the agent was still mid-turn
+[1:00] Discarded a reply: the agent was still mid-turn
+[2:55] Discarded a reply: the agent was still mid-turn
+[3:34] Discarded a reply: the agent was still mid-turn
+[3:58] Discarded a reply: the agent was still mid-turn
+[4:20] Discarded a reply: the agent was still mid-turn
+[4:49] Discarded a reply: the agent was still mid-turn
+[4:59] Bot ended the call (agenda complete)

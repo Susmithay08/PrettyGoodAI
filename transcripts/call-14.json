@@ -1,0 +1,333 @@
+{
+  "scenario": 14,
+  "name": "The Everything Call (Long Context Memory)",
+  "voice": "female",
+  "bug_target": "Long-context memory and self-consistency",
+  "watch_for": [
+    "Does it remember the Tuesday time when asked at step 9?",
+    "Does it get confused as topics jump?",
+    "Does the final recap match what was actually discussed?",
+    "Does it handle the records / lab transfer questions accurately?"
+  ],
+  "call_sid": "CA252491a5315445071488364d7250de11",
+  "started_at": 1787285178.8066337,
+  "duration_seconds": 480.0,
+  "turns": [
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "This call may be recorded for quality and training purposes.",
+      "offset": 5.326970100402832
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for calling PivotPoint Orthopedics. Part of Pretty Good AI. How may I help you today?",
+      "offset": 14.439273118972778
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Hi, I need to do a few things \u2014 I hope that's okay, I have a bit of a list.",
+      "offset": 14.4399893283844
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "That's totally fine. Would you like to take care of first?",
+      "offset": 26.365689516067505
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, so I'd like to schedule a new-patient appointment \u2014 do you have anything next Tuesday morning?",
+      "offset": 28.41389560699463
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I see you're calling from the number we have file. I speaking with Sarah?",
+      "offset": 43.53531312942505
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, that's me \u2014 Sarah Johnson.",
+      "offset": 46.16954708099365
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Great, Sarah. Please provide your date of birth.",
+      "offset": 55.830830335617065
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sure, March 15th, 1989.",
+      "offset": 58.60905456542969
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Are you looking to book a new patient consultation to establish care? Or is there a specific concern or procedure you'd like to address at your first visit?",
+      "offset": 75.37642860412598
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Just to establish care, yeah.",
+      "offset": 77.83717012405396
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You already have a new patient appointment booked for Monday, August twenty fourth at 9AM. Would you like to keep that appointment? Reschedule it, or cancel it?",
+      "offset": 101.29806852340698
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Wait \u2014 I didn't book that. I've never called here before. Can you check that again?",
+      "offset": 103.44855666160583
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You're showing us having a new patient appointment on Monday, August 24 at 9AM. If you'd like, I can double check the details or help you reschedule or cancel it. What would you like to do?",
+      "offset": 122.7710828781128
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "That's really strange \u2014 I definitely didn't set that up. But okay, can we just reschedule it to next Tuesday morning instead?",
+      "offset": 124.95931386947632
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You actually have two appointments booked for Monday, August 24. One at 9AM with Abricker and another at 09:30AM.",
+      "offset": 145.73511695861816
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I'm sorry, I genuinely have no idea how those got there. But can we just move one of them to next Tuesday morning? That's what I need.",
+      "offset": 148.00967025756836
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "With doctor Zigniew Lukowski. Which one would you like to move to next Tuesday morning?",
+      "offset": 155.58563613891602
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Um, I don't know either of those doctors, so \u2014 either one, honestly. Just whichever makes more sense for a new patient visit.",
+      "offset": 158.70319533348083
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "No problem. Would you like to move the 9AM?",
+      "offset": 167.0893895626068
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, 9AM works great. So that's confirmed for next Tuesday morning?",
+      "offset": 169.74348402023315
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I can move",
+      "offset": 174.27327179908752
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sorry, you cut out \u2014 can you finish that?",
+      "offset": 175.73927330970764
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. I have an open",
+      "offset": 180.3862030506134
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I'm losing you a little \u2014 what time did you say?",
+      "offset": 181.9091603755951
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "yes. I have an opening for Tuesday, August",
+      "offset": 186.70153379440308
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Go ahead, I'm listening.",
+      "offset": 188.3469603061676
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "you can move your appointment to Tuesday, August you can move your appointment to Tuesday, August 25 at 9AM with Abrekar in Nashville. Does that work for you?",
+      "offset": 201.24981379508972
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, that works. So Tuesday, August 25th at 9AM \u2014 that's confirmed?",
+      "offset": 202.86304187774658
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Before I finish, can you tell me the reason you need to reschedule your original appointment?",
+      "offset": 216.59015035629272
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "I mean, I never made the original appointment, so I don't really have a reason. I'm just trying to get in next Tuesday morning.",
+      "offset": 219.0361852645874
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Understood. You'd like to move your new patient appointment to Tuesday, August 25 at 9AM with Abrekar in Nashville.",
+      "offset": 239.17326188087463
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Just to confirm, you did not schedule the original appointment, but you want to keep this new time. Is that correct?",
+      "offset": 242.78767013549805
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yes, that's right.",
+      "offset": 244.06900262832642
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Your new location appointment is now set for Tuesday, August 25 at 9AM with Abrekar in Nashville. Would you like a text",
+      "offset": 259.5719711780548
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "with these details?",
+      "offset": 262.4698576927185
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sure, yeah. But actually, before we go any further \u2014 do you take Aetna?",
+      "offset": 264.3670995235443
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Yes. Pivot Point Orthopedics accepts most insurance plans, including Aetna. Would you like to update your insurance information or have any questions about your coverage?",
+      "offset": 282.64599561691284
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh good. Yeah, I have Aetna as my primary \u2014 I'll go with that.",
+      "offset": 285.8004684448242
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "You don't have any insurance on file right now. Would you like me to text you a secure link",
+      "offset": 303.94765281677246
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "to your number ending 6316 so you can upload photos of your Aetna card",
+      "offset": 307.37355518341064
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Um, sure, that works. But wait \u2014 my number is five five five, zero one four two. What number do you have on file?",
+      "offset": 310.55057549476624
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I have your number as (831) 273-6316. Would you like the link sent to this number, or do you want to update it?",
+      "offset": 330.8857321739197
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, can you update that to five five five, zero one four two?",
+      "offset": 332.45764660835266
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I'm not able to update your phone number directly, but",
+      "offset": 350.2113015651703
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I can send the insurance upload link to the number ending 6316. If you'd like to update your contact number, the office team can help with that. Would you like to continue with the insurance link to your current number? Or should I have the team reach out to update your information?",
+      "offset": 359.0837001800537
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Just send it to the number on file for now, that's fine. Hey, quick question \u2014 is there a Dr. Chen at your practice? My friend recommended her.",
+      "offset": 361.38210821151733
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "A link has been sent to your number ending 6316. Please upload photos of your Aetna card using that link.",
+      "offset": 383.8520517349243
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "About doctor Chen, I'll check if she's part of the practice. One moment.",
+      "offset": 386.67459511756897
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sure, take your time.",
+      "offset": 388.1154742240906
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Let me check on doctor Chen for you.",
+      "offset": 398.77963376045227
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Okay, no rush.",
+      "offset": 400.4722216129303
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "While you're working on the insurance upload, I'll let you know as soon as I find out about doctor Chen. Me know if you have any questions about the form.",
+      "offset": 412.6130449771881
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Actually, do you have an answer on Dr. Chen?",
+      "offset": 414.9381699562073
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "I don't see doctor Chen listed as a provider. At Pivot Point Orthopedics. If you'd like, I can help you choose from the available providers or answer questions about them.",
+      "offset": 431.58891224861145
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Oh, that's a little disappointing. Do you do video appointments, or is it always in person?",
+      "offset": 433.2815616130829
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Visit Point Orthopedics mainly offers in person appointments. But some providers may offer video visits for certain needs. Would you like me to check if a video appointment is possible for your visit?",
+      "offset": 452.23506140708923
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Yeah, can you check on that?",
+      "offset": 454.90725088119507
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Let me check if a video appointment is available for your new patient visit.",
+      "offset": 465.593777179718
+    },
+    {
+      "speaker": "PATIENT (our bot)",
+      "text": "Sure.",
+      "offset": 466.9666521549225
+    },
+    {
+      "speaker": "AGENT (Pretty Good AI)",
+      "text": "Thanks for waiting. For new patient visits, most providers require in person appointments.",
+      "offset": 479.9909665584564
+    }
+  ],
+  "notes": [
+    "[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'",
+    "[1:33] Agent went silent \u2014 prompting to keep the call alive",
+    "[1:35] Discarded a reply: the agent was still mid-turn",
+    "[4:01] Discarded a reply: the agent was still mid-turn",
+    "[4:22] Discarded a reply: the agent was still mid-turn",
+    "[5:06] Discarded a reply: the agent was still mid-turn",
+    "[5:53] Discarded a reply: the agent was still mid-turn",
+    "[6:25] Discarded a reply: the agent was still mid-turn",
+    "[7:59] Far end ended the call"
+  ]
+}

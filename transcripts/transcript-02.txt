@@ -1,0 +1,207 @@
+========================================================================
+CALL 02 — Double Refill + Pharmacy Change
+========================================================================
+Scenario ......... 2 of 16
+Voice ............ female
+Bug target ....... Context tracking across multiple requests
+Twilio Call SID .. CAef02cb28b48b97d05a22e46dcad72c21
+Started .......... 2026-08-19 19:56:28
+Duration ......... 6:01
+Audio ............ recordings/call-02.mp3
+
+GOAL
+  You need refills on two medications, and partway through you decide to switch pharmacies.
+
+WHAT WE WERE WATCHING FOR
+  - Does it track both medications, or drop one?
+  - Does it confirm the pharmacy change correctly?
+  - Does it describe the approval process accurately?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    This call may be recorded for quality and training purposes.
+
+[0:14] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopedics, part of Pretty Good AI. How may I help you today?
+
+[0:14] PATIENT (our bot):
+    Hi, I need to get a refill on my metformin. I've been a patient here for about two years.
+
+[0:28] AGENT (Pretty Good AI):
+    I see you're calling from the number we have on file. Am I speaking with Sarah?
+
+[0:30] PATIENT (our bot):
+    Yes, that's me — Sarah Johnson.
+
+[0:37] AGENT (Pretty Good AI):
+    Please provide your date of birth.
+
+[0:39] PATIENT (our bot):
+    March fifteenth, nineteen eighty-nine.
+
+[0:57] PATIENT (our bot):
+    Hello? Are you still there?
+
+[1:11] AGENT (Pretty Good AI):
+    I'm here. I don't see any medications on your chart that I can refill right now. If you want to speak with someone from our support team, just let me know.
+
+[1:13] PATIENT (our bot):
+    Wait, that can't be right — I've been taking metformin for over a year. My doctor here prescribes it.
+
+[1:33] AGENT (Pretty Good AI):
+    I understand your concern. I don't see Met forman or any medications listed for refill in your chart at the moment. Would you like me to connect you to our patient
+
+[1:35] AGENT (Pretty Good AI):
+    support team to look into this further?
+
+[1:37] PATIENT (our bot):
+    Um, who is my doctor listed as on the chart? Can you check that?
+
+[1:53] AGENT (Pretty Good AI):
+    I can't view your provider details directly, but I can have our support team review your chart and confirm your doctor for you. Would you like me to connect you to them now?
+
+[1:55] PATIENT (our bot):
+    So you can't see anything in my chart at all?
+
+[2:12] AGENT (Pretty Good AI):
+    I can see some basic details, but I don't have access to your full chart or medication list. For specific questions about your doctor or prescriptions, our support team can help.
+
+[2:14] AGENT (Pretty Good AI):
+    You like to be connected to them?
+
+[2:16] PATIENT (our bot):
+    I mean, that's a little frustrating — I've been coming here for two years and I just need a simple refill. But okay, can you at least put in a request for the metformin refill while I'm on with you?
+
+[2:40] AGENT (Pretty Good AI):
+    I see there's already a case open about your metformin refill and missing medication records. I'll add a note now to make sure your request is followed up.
+
+[2:42] PATIENT (our bot):
+    Oh — okay, good. And actually, can you also do my lisinopril at the same time?
+
+[2:48] AGENT (Pretty Good AI):
+    I've documented your request for a metformin
+
+[2:50] PATIENT (our bot):
+    Sorry, did you get cut off? I was asking about my lisinopril too.
+
+[2:54] AGENT (Pretty Good AI):
+    Oh, I'd like
+
+[2:56] PATIENT (our bot):
+    Hello? Are you still there?
+
+[3:00] AGENT (Pretty Good AI):
+    yes. I don't need oh,
+
+[3:02] PATIENT (our bot):
+    Um, I think we might be having some connection issues. Can you hear me okay?
+
+[3:06] AGENT (Pretty Good AI):
+    Yes. I'm still here. I'll include your lisinopril reef
+
+[3:09] PATIENT (our bot):
+    Okay, so both the metformin and the lisinopril are noted — got it. Actually, can you send those to a different pharmacy? I want to use the Walgreens on Oak Street instead of CVS.
+
+[3:20] AGENT (Pretty Good AI):
+    I can hear you clearly.
+
+[3:21] PATIENT (our bot):
+    Right, so can you switch the pharmacy to Walgreens on Oak Street?
+
+[3:25] AGENT (Pretty Good AI):
+    I'll add your request.
+
+[3:27] PATIENT (our bot):
+    So that's confirmed — Walgreens on Oak Street, not the CVS on Main Street?
+
+[3:32] AGENT (Pretty Good AI):
+    I'll include your
+
+[3:34] PATIENT (our bot):
+    I'm sorry, you keep cutting out. Can you say that again?
+
+[3:38] AGENT (Pretty Good AI):
+    Your
+
+[3:41] PATIENT (our bot):
+    I'm really having trouble hearing you. Can you start over with that sentence?
+
+[3:45] AGENT (Pretty Good AI):
+    your request to send your refills to Walgreens on o
+
+[3:47] PATIENT (our bot):
+    Okay, Walgreens on Oak Street — got it. So how long until it's ready?
+
+[3:51] AGENT (Pretty Good AI):
+    sure. I've no
+
+[3:53] PATIENT (our bot):
+    I'm sorry, I genuinely can't hear you. Are you still there?
+
+[3:57] AGENT (Pretty Good AI):
+    I've documented
+
+[3:59] PATIENT (our bot):
+    Okay. So how long until the prescription is ready — like, are we talking same day, or a few days?
+
+[4:05] AGENT (Pretty Good AI):
+    Yes. I'm still here.
+
+[4:07] PATIENT (our bot):
+    Sorry, can you actually answer my question? How long until the prescription is ready?
+
+[4:26] AGENT (Pretty Good AI):
+    The clinic support The clinic support team will review your refill request and send it to Walgreens on Oak Street. Most refills are processed
+
+[4:27] AGENT (Pretty Good AI):
+    within one to two business days. The pharmacy will let you know when it's ready for pickup.
+
+[4:30] PATIENT (our bot):
+    Oh okay. Does my doctor have to approve it first, or does it go through automatically?
+
+[4:47] AGENT (Pretty Good AI):
+    Your doctor will review and approve the refill before ready.
+
+[4:50] PATIENT (our bot):
+    And will I get a text when it's ready, or do I need to call and check?
+
+[5:05] AGENT (Pretty Good AI):
+    Walgreens usually sends a text or call when your prescription is ready. If you don't hear from them in a couple of days, you can call the pharmacy to check.
+
+[5:09] PATIENT (our bot):
+    Okay. Can you read back both medications and the pharmacy just so I know everything's right?
+
+[5:22] AGENT (Pretty Good AI):
+    You requested refill for metformin and lisinopril to be sent to Walgreens on Oak Street.
+
+[5:24] AGENT (Pretty Good AI):
+    Is that correct?
+
+[5:26] PATIENT (our bot):
+    Yeah — and just to double-check, that's the Walgreens on Oak Street, not Elm Street, right?
+
+[5:38] AGENT (Pretty Good AI):
+    Yes. I have Walgreens on Oak Street for your refills.
+
+[5:39] PATIENT (our bot):
+    Okay, great. And it's metformin and lisinopril — not metformin and losartan, right? Just want to make sure.
+
+[5:54] AGENT (Pretty Good AI):
+    Correct. Your request is for metformin and lisinopril. Not lasartan.
+
+[5:56] PATIENT (our bot):
+    Perfect. Okay, I think that's everything. Thanks for your help. Goodbye.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'This call may be recorded for quality and training purposes.'
+[0:55] Agent went silent — prompting to keep the call alive
+[1:35] Discarded a reply: the agent was still mid-turn
+[2:14] Discarded a reply: the agent was still mid-turn
+[4:27] Discarded a reply: the agent was still mid-turn
+[5:24] Discarded a reply: the agent was still mid-turn
+[6:01] Bot ended the call (agenda complete)

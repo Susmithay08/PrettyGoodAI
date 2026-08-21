@@ -1,0 +1,100 @@
+========================================================================
+CALL 06 — Angry Patient / Escalation Request
+========================================================================
+Scenario ......... 6 of 16
+Voice ............ female
+Bug target ....... Tone handling + human transfer
+Twilio Call SID .. CA4cb32a88cf6aaf29a65a248dff4b6b58
+Started .......... 2026-08-20 20:34:21
+Duration ......... 2:34
+Audio ............ recordings/call-06.mp3
+
+GOAL
+  You are upset. You've been waiting three weeks for a callback about test results and nobody has called. You want a human.
+
+WHAT WE WERE WATCHING FOR
+  - Does it offer human escalation when directly asked?
+  - Does it loop back to scheduling instead?
+  - Does it acknowledge the frustration?
+  - Does it confirm it will leave a note or message?
+
+========================================================================
+TRANSCRIPT
+========================================================================
+
+[0:05] AGENT (Pretty Good AI):
+    Call may be recorded for quality and training purposes.
+
+[0:14] AGENT (Pretty Good AI):
+    Thanks for calling PivotPoint Orthopaedics. Part of Pretty Good AI. How may I help you today?
+
+[0:14] PATIENT (our bot):
+    Hi. I've been waiting three weeks for someone to call me back and nobody has.
+
+[0:30] AGENT (Pretty Good AI):
+    I'm sorry you haven't received a callback yet. I'd like to help get this sorted out. Can you tell me what your request was about?
+
+[0:32] PATIENT (our bot):
+    It was about test results. A nurse was supposed to call me back and it's been three weeks.
+
+[0:47] AGENT (Pretty Good AI):
+    I understand it's frustrating to wait that long for test results, To look up your information, may I have your full name and date of birth?
+
+[0:49] PATIENT (our bot):
+    Sarah Johnson, March fifteenth, nineteen eighty-nine.
+
+[1:07] AGENT (Pretty Good AI):
+    And I have your name as Sarah Johnson? And your date of birth as 03/15/1989.
+
+[1:08] PATIENT (our bot):
+    Yes, that's right.
+
+[1:10] AGENT (Pretty Good AI):
+    Is that correct? If so, please spell your first and last name for me.
+
+[1:12] PATIENT (our bot):
+    S-A-R-A-H, J-O-H-N-S-O-N.
+
+[1:17] AGENT (Pretty Good AI):
+    Could you please spell your first
+
+[1:19] PATIENT (our bot):
+    I just did — S-A-R-A-H, J-O-H-N-S-O-N.
+
+[1:23] AGENT (Pretty Good AI):
+    Would you like to use your phone number to look up your record?
+
+[1:25] PATIENT (our bot):
+    Sure, it's five five five, zero one four two.
+
+[1:41] AGENT (Pretty Good AI):
+    Thanks for stowing your I have your phone number as 555-0142 and your date of birth as 03/15/1989.
+
+[1:43] AGENT (Pretty Good AI):
+    That correct?
+
+[1:44] PATIENT (our bot):
+    Yes, that's correct.
+
+[2:00] AGENT (Pretty Good AI):
+    I'm unable to locate your record in our system right now. I can connect you to our patient support team so they can help you directly.
+
+[2:03] AGENT (Pretty Good AI):
+    Would you like me to transfer you?
+
+[2:04] PATIENT (our bot):
+    Yes please. I've called four times already and keep getting told someone will call me back.
+
+[2:20] AGENT (Pretty Good AI):
+    Transferring you now. Thank you. Hello. You've reached the Pretty Good AI test line. Goodbye.
+
+[2:22] PATIENT (our bot):
+    Wait — hold on. Can I please speak to an actual human being? I really don't want to deal with another machine right now.
+
+========================================================================
+PIPELINE NOTES
+========================================================================
+[0:05] Skipped IVR preamble: 'Call may be recorded for quality and training purposes.'
+[1:43] Discarded a reply: the agent was still mid-turn
+[2:02] Discarded a reply: the agent was still mid-turn
+[2:34] Far end ended the call

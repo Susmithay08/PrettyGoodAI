@@ -26,6 +26,7 @@ import websockets
 log = logging.getLogger(__name__)
 
 DEEPGRAM_URL = "wss://api.deepgram.com/v1/listen"
+MAX_RECONNECTS = 5  # give up rather than thrash if the stream keeps dying
 
 Callback = Callable[..., Awaitable[None]]
 
@@ -52,6 +53,7 @@ class Transcriber:
         self._ws: websockets.WebSocketClientProtocol | None = None
         self._reader: asyncio.Task | None = None
         self._closed = False
+        self._reconnects = 0
 
     # -- lifecycle ---------------------------------------------------------
 
@@ -81,12 +83,41 @@ class Transcriber:
         log.info("Deepgram connected (model=%s, language=%s)", self._model, self._language)
 
     async def send_audio(self, ulaw: bytes) -> None:
-        if self._ws is None or self._closed:
+        if self._closed:
+            return
+        if self._ws is None:
+            await self._reconnect()
             return
         try:
             await self._ws.send(ulaw)
         except websockets.ConnectionClosed:
-            self._closed = True
+            # Deepgram drops the socket occasionally (keepalive timeout). If we
+            # don't come back the bot is deaf for the rest of the call, which
+            # looks like the far end going silent. Reconnect and keep going.
+            log.warning("Deepgram socket dropped — reconnecting")
+            self._ws = None
+            await self._reconnect()
+
+    async def _reconnect(self) -> None:
+        """Re-establish the stream after a drop, without killing the call."""
+        if self._closed or self._reconnects >= MAX_RECONNECTS:
+            if self._reconnects >= MAX_RECONNECTS:
+                log.error("Deepgram reconnect limit reached — transcription is down")
+                self._closed = True
+            return
+
+        self._reconnects += 1
+        # The read loop calls this on a drop, so it may be the running task —
+        # cancelling it here would cancel ourselves mid-reconnect.
+        current = asyncio.current_task()
+        if self._reader is not None and self._reader is not current:
+            self._reader.cancel()
+        try:
+            await self.connect()
+            log.info("Deepgram reconnected (attempt %d)", self._reconnects)
+        except Exception as exc:  # noqa: BLE001 — a failed retry must not end the call
+            log.error("Deepgram reconnect failed: %s", exc)
+            self._ws = None
 
     async def close(self) -> None:
         self._closed = True
@@ -114,12 +145,20 @@ class Transcriber:
                 except (TypeError, ValueError):
                     continue
                 await self._dispatch(message)
+            # A graceful close ends the iteration without raising, so falling
+            # out of the loop is itself a disconnect we need to recover from.
+            log.info("Deepgram stream ended")
         except websockets.ConnectionClosed:
             log.info("Deepgram connection closed")
         except asyncio.CancelledError:
             raise
         except Exception as exc:  # noqa: BLE001
             log.error("Deepgram read loop error: %s", exc)
+
+        # Any exit that wasn't us shutting down means the bot has gone deaf.
+        if not self._closed:
+            self._ws = None
+            await self._reconnect()
 
     async def _dispatch(self, message: dict) -> None:
         kind = message.get("type")
